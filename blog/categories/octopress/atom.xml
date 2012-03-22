@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: octopress | This is Kun's Blog.]]></title>
+  <link href="http://thisiskun.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://thisiskun.github.com/"/>
+  <updated>2012-03-22T22:43:53+08:00</updated>
+  <id>http://thisiskun.github.com/</id>
+  <author>
+    <name><![CDATA[Kun Chen]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hello Octopress!]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/03/22/hello-octopress/"/>
+    <updated>2012-03-22T22:42:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/03/22/hello-octopress</id>
+    <content type="html"><![CDATA[<p>Hello Octopress!</p>
+
+<p>This is my first blog!</p>
+]]></content>
+  </entry>
+  
+</feed>
