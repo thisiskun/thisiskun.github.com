@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-03-22T22:50:14+08:00</updated>
+  <updated>2012-03-22T23:54:57+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -21,6 +21,10 @@
     <content type="html"><![CDATA[<p>Hello Octopress!</p>
 
 <p>This is my first post!</p>
+
+<p>关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～</p>
+
+<p>你好，Octopress！</p>
 ]]></content>
   </entry>
   
