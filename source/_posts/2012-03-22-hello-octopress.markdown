@@ -8,4 +8,4 @@ categories: [octopress, ruby]
 
 Hello Octopress!
 
-This is my first blog!
+This is my first post!
