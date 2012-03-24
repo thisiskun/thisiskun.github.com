@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: octopress | This is Kun's Blog.]]></title>
-  <link href="http://thisiskun.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <title><![CDATA[Category: how-to | This is Kun's Blog.]]></title>
+  <link href="http://thisiskun.github.com/blog/categories/how-to/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
   <updated>2012-03-24T20:33:46+08:00</updated>
   <id>http://thisiskun.github.com/</id>
@@ -170,21 +170,6 @@ git push origin source
 <li><a href="http://markdown.tw/">markdown（中文）</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello Octopress!]]></title>
-    <link href="http://thisiskun.github.com/blog/2012/03/22/hello-octopress/"/>
-    <updated>2012-03-22T22:42:00+08:00</updated>
-    <id>http://thisiskun.github.com/blog/2012/03/22/hello-octopress</id>
-    <content type="html"><![CDATA[<p>Hello Octopress!</p>
-
-<p>This is my first post!</p>
-
-<p>关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～</p>
-
-<p>你好，Octopress！</p>
 ]]></content>
   </entry>
   

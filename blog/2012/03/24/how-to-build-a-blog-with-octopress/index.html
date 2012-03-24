@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>This is Kun's Blog.</title>
+  <title>如何使用Octopress搭建blog - This is Kun's Blog.</title>
   <meta name="author" content="Kun Chen">
 
   
@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://thisiskun.github.com">
+  <link rel="canonical" href="http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -78,15 +78,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/03/24/how-to-build-a-blog-with-octopress/">如何使用Octopress搭建blog</a></h1>
+      <h1 class="entry-title">如何使用Octopress搭建blog</h1>
     
     
       <p class="meta">
@@ -109,7 +106,7 @@
   </header>
 
 
-  <div class="entry-content"><p><a href="http://octopress.org/">Octopress</a>是一个静态的blog系统，
+<div class="entry-content"><p><a href="http://octopress.org/">Octopress</a>是一个静态的blog系统，
 虽然副标题是“A blogging framework for hackers”，
 其实只要稍微折腾下，搭建一个blog还是分分钟的事。
 以下记录我是如何搭建这个blog的。</p>
@@ -291,22 +288,16 @@ name填<code>foobar.github.com</code>。</p>
 </ul>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/22/hello-octopress/">Hello Octopress!</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kun Chen</span></span>
+
+      
 
 
 
@@ -318,33 +309,44 @@ name填<code>foobar.github.com</code>。</p>
   
 
 
-<time datetime="2012-03-22T22:42:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
-        
-      </p>
+<time datetime="2012-03-24T17:44:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/how-to/'>how-to</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>Hello Octopress!</p>
-
-<p>This is my first post!</p>
-
-<p>关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～</p>
-
-<p>你好，Octopress！</p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress/" data-via="thisiskun" data-counturl="http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/22/hello-octopress/" title="Previous Post: Hello Octopress!">&laquo; Hello Octopress!</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -365,7 +367,7 @@ name填<code>foobar.github.com</code>。</p>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/thisiskun">@thisiskun</a> on GitHub
@@ -395,7 +397,7 @@ name填<code>foobar.github.com</code>。</p>
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -424,6 +426,7 @@ name填<code>foobar.github.com</code>。</p>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -438,7 +441,10 @@ name填<code>foobar.github.com</code>。</p>
       var disqus_shortname = 'thisiskun';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress/';
+        var disqus_url = 'http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
