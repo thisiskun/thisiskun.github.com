@@ -4,7 +4,7 @@
   <title><![CDATA[Category: how-to | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/how-to/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-03-24T20:33:46+08:00</updated>
+  <updated>2012-03-24T20:38:25+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -123,6 +123,12 @@ categories: octopress # one category</p>
 - octopress
 - blog
 ```</p>
+
+<p>如果你不想公开发布一篇post，
+<code>
+published: false
+</code>
+就可以了。</p>
 
 <h3>New pages</h3>
 
