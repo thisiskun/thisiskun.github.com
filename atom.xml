@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-03-24T20:38:25+08:00</updated>
+  <updated>2012-03-30T01:13:58+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ruby的$LOAD_PATH]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/03/30/rubys-load-path/"/>
+    <updated>2012-03-30T00:22:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/03/30/rubys-load-path</id>
+    <content type="html"><![CDATA[<p>在ruby中，当你<code>require</code>一个文件的时候，
+ruby去哪里寻找这个文件呢？
+答案就是<code>$LOAD_PATH</code>了。
+<code>$LOAD_PATH</code>还有另外一种perl风格的别名<code>$:</code>，
+而且貌似这种写法更加常见，
+虽然让人摸不着头脑就是了。</p>
+
+<p>假设在<code>~/test</code>路径下，
+有<code>foo.rb</code>和<code>bar.rb</code>，
+在ruby 1.9.2 之前的版本里，
+执行脚本的目录是加入到<code>$LOAD_PATH</code>里的，
+所以你可以</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bar.rb</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;foo&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ruby 1.9.2 之后的版本里，
+不再包含当前目录，
+所以上面的写法会出错，
+所以相应的代码应该改为</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bar.rb</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;./foo&#39;</span>
+</span><span class='line'><span class="c1"># or</span>
+</span><span class='line'><span class="n">require_relative</span> <span class="s1">&#39;foo&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中<code>require './foo'</code>是当前目录相对文件的路径，
+<code>require_relative</code>的意思是，
+<em>包含这句代码的文件与目标文件的相对路径</em>。
+下面是<a href="http://stackoverflow.com/questions/4333286/ruby-require-vs-require-relative-best-practice-to-workaround-running-in-both">stackoverflow</a>上的一段兼容1.9.2之前版本的代码</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">unless</span> <span class="no">Kernel</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:require_relative</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">Kernel</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">require_relative</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">caller</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">),</span> <span class="n">path</span><span class="o">.</span><span class="n">to_str</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>回到<code>$LOAD_PATH</code>，让我们看看它的值，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面的方法可以将目录动态加入<code>$LOAD_PATH</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vg">$:</span><span class="o">.</span><span class="n">unshift</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s2">&quot;../lib&quot;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因为ruby以第一个找到的为准，
+所以用unshift，可以提高些许效率。</p>
+
+<hr />
+
+<p>最后，一点小发现，
+rspec是会自动加载<code>.lib</code>和<code>.spec</code>的。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[如何使用Octopress搭建blog]]></title>
@@ -208,6 +311,17 @@ name填<code>foobar.github.com</code>。</p>
 <li><a href="http://markdown.tw/">markdown（中文）</a></li>
 </ul>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[a draft]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/03/24/a-draft/"/>
+    <updated>2012-03-24T17:26:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/03/24/a-draft</id>
+    <content type="html"><![CDATA[<h1>I not gonna publish this post.</h1>
+
+<p>This is a draft, it will not be push to my git repo.</p>
 ]]></content>
   </entry>
   
