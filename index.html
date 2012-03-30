@@ -133,6 +133,7 @@ ruby去哪里寻找这个文件呢？
 
 
 <p>ruby 1.9.2 之后的版本里，
+出于安全的考虑，
 不再包含当前目录，
 所以上面的写法会出错，
 所以相应的代码应该改为</p>
@@ -150,7 +151,7 @@ ruby去哪里寻找这个文件呢？
 
 <p>其中<code>require './foo'</code>是当前目录相对文件的路径，
 <code>require_relative</code>的意思是，
-<em>包含这句代码的文件与目标文件的相对路径</em>。
+<strong>包含这句代码的文件与目标文件的相对路径</strong>。
 下面是<a href="http://stackoverflow.com/questions/4333286/ruby-require-vs-require-relative-best-practice-to-workaround-running-in-both">stackoverflow</a>上的一段兼容1.9.2之前版本的代码</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
