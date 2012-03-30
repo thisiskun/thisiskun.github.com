@@ -4,9 +4,7 @@ title: "a draft"
 date: 2012-03-24 17:26
 comments: true
 published: false
-categories: 
+categories: ruby
 ---
 
 # I not gonna publish this post. #
-
-This is a draft, it will not be push to my git repo.
