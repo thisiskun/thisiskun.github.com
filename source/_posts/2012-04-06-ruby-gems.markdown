@@ -1,0 +1,181 @@
+---
+layout: post
+title: "Ruby Gems"
+date: 2012-04-06 14:54
+comments: true
+categories: [ruby, gems]
+---
+
+这里是我对rubygems的学习记录和自己的一些理解。
+
+## 什么是rubygems gems
+
+[rubygems][2]是ruby的一个包管理系统，gem是ruby的软件包。
+
+上篇日志讲到了`$LOAD_PATH`，其实rubygems的实现也是通过`$LOAD_PATH`的。
+
+``` ruby
+ irb(main):002:0> pp $:
+["/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux"]
+```
+
+我们来`require`一个gem
+
+``` ruby
+irb(main):003:0> require 'rdiscount'
+=> true
+irb(main):004:0> pp $:
+["/home/kun/.rvm/gems/ruby-1.9.2-p290@rails3.2.1/gems/rdiscount-1.6.8/lib",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1",
+ "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux"]
+```
+
+如上，`rdiscount`这个gem的lib目录已经加入到`$LOAD_PATH`中了，可以很方便的`require`了。
+
+## 建立自己的gem
+
+### 使用bundler
+
+这里我用`bundler`来生成gem结构，其他实现不太清楚。
+
+生成gem结构：
+
+``` bash
+bundle gem hola
+```
+
+目录结构：
+
+``` bash
+.
+└── hola
+    ├── lib
+    │   ├── hola
+    │   │   └── version.rb
+    │   └── hola.rb
+    ├── Gemfile
+    ├── hola.gemspec
+    ├── LICENSE
+    ├── Rakefile
+    └── README.md
+```
+
+`bundler`生成的gem结构已经很符合gem的约定规范了，
+而且还自动建立个git repo，
+用起来很舒服。
+
+### lib/
+
+lib目录是我们的代码所在目录，当我们install了这个gem，
+当我们`require 'hola'`时，就是`require`了这里的`hola.rb`，
+所以需要的其他文件，都要在`hola.rb`里面`require`进来。
+
+### Gemfile
+
+`Gemfile`是bundler的配置文件
+
+``` ruby Gemfile
+source 'https://rubygems.org'
+
+# Specify your gem's dependencies in hola.gemspec
+gemspec
+```
+
+如提示，我们应该把软件包依赖写在`hola.gemspec`里面。
+
+### hola.gemspec
+
+gem描述文件
+
+``` ruby hola.gemspec
+# -*- encoding: utf-8 -*-
+require File.expand_path('../lib/hola/version', __FILE__)
+
+Gem::Specification.new do |gem|
+  gem.authors       = ["Arthur Chen"]
+  gem.email         = ["chenchaokun@gmail.com"]
+  gem.description   = %q{TODO: Write a gem description}
+  gem.summary       = %q{TODO: Write a gem summary}
+  gem.homepage      = ""
+
+  gem.files         = `git ls-files`.split($\)
+  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.name          = "hola"
+  gem.require_paths = ["lib"]
+  gem.version       = Hola::VERSION
+end
+```
+
+具体看[官方文档][1]就好了。
+
+### Rakefile
+
+``` ruby Rakefile
+#!/usr/bin/env rake
+require "bundler/gem_tasks"
+```
+
+``` bash 
+# rake -T
+rake build    # Build hola-0.0.1.gem into the pkg directory
+rake install  # Build and install hola-0.0.1.gem into system gems
+rake release  # Create tag v0.0.1 and build and push hola-0.0.1.gem to Rubygems
+```
+
+三个好用的task。
+
+### 添加可执行脚本
+
+按照惯例，可执行脚本放在`bin/`目录下，脚本命名一般跟gem一样，
+如`bin/hola`，
+ruby构建命令行工具比较流行的有`rake`和`thor`，
+后续应该有相关的博文。
+
+### test
+unittest或者rspec，相应的测试代码放在`test/` `sepc/`下。
+
+## publishing
+
+先`git commit`，
+也可以`git remote add`将项目托管到github。
+
+``` bash
+rake install
+rake release
+```
+
+这样就可以把你的gem发布到[rubygems.org][2]上了，
+记得注册。。。
+api key，
+以及检查gem名是否可用。
+
+## 最后
+
+现在你`gem list -r your_gem`，就可以看到你的gem了，
+全球各地的黑客们就可以很愉快的下载使用你的gem了，
+你为开源世界又贡献了一个helloworld，
+是不是有一股满足感油然而生呢：）。
+
+参考：
+
++ [rubygems guides][3]
++ [railscasts: new gem with bundler][4]
+
+[1]: http://guides.rubygems.org/specification-reference/ specification-reference
+[2]: https://rubygems.org/ rubygems
+[3]: http://guides.rubygems.org/ "rubygems guides"
+[4]: http://railscasts.com/episodes/245-new-gem-with-bundler "railcasts"
