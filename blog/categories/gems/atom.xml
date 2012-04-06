@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ruby | This is Kun's Blog.]]></title>
-  <link href="http://thisiskun.github.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <title><![CDATA[Category: gems | This is Kun's Blog.]]></title>
+  <link href="http://thisiskun.github.com/blog/categories/gems/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
   <updated>2012-04-06T16:59:32+08:00</updated>
   <id>http://thisiskun.github.com/</id>
@@ -200,121 +200,6 @@ api key，
 <li><a href="http://railscasts.com/episodes/245-new-gem-with-bundler" title="railcasts">railscasts: new gem with bundler</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ruby的$LOAD_PATH]]></title>
-    <link href="http://thisiskun.github.com/blog/2012/03/30/rubys-load-path/"/>
-    <updated>2012-03-30T00:22:00+08:00</updated>
-    <id>http://thisiskun.github.com/blog/2012/03/30/rubys-load-path</id>
-    <content type="html"><![CDATA[<p>在ruby中，当你<code>require</code>一个文件的时候，
-ruby去哪里寻找这个文件呢？
-答案就是<code>$LOAD_PATH</code>了。
-<code>$LOAD_PATH</code>还有另外一种perl风格的别名<code>$:</code>，
-而且貌似这种写法更加常见，
-虽然让人摸不着头脑就是了。</p>
-
-<p>假设在<code>~/test</code>路径下，
-有<code>foo.rb</code>和<code>bar.rb</code>，
-在ruby 1.9.2 之前的版本里，
-执行脚本的目录是加入到<code>$LOAD_PATH</code>里的，
-所以你可以</p>
-
-<p>``` ruby</p>
-
-<h1>bar.rb</h1>
-
-<p>require 'foo'
-```</p>
-
-<p>ruby 1.9.2 之后的版本里，
-出于安全的考虑，
-不再包含当前目录，
-所以上面的写法会出错，
-所以相应的代码应该改为</p>
-
-<p>``` ruby</p>
-
-<h1>bar.rb</h1>
-
-<p>require './foo'</p>
-
-<h1>or</h1>
-
-<p>require_relative 'foo'
-```</p>
-
-<p>其中<code>require './foo'</code>是当前目录相对文件的路径，
-<code>require_relative</code>的意思是，
-<strong>包含这句代码的文件与目标文件的相对路径</strong>。
-下面是<a href="http://stackoverflow.com/questions/4333286/ruby-require-vs-require-relative-best-practice-to-workaround-running-in-both">stackoverflow</a>上的一段兼容1.9.2之前版本的代码</p>
-
-<p>``` ruby
-unless Kernel.respond_to?(:require_relative)
-  module Kernel</p>
-
-<pre><code>def require_relative(path)
-  require File.join(File.dirname(caller[0]), path.to_str)
-end
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<hr />
-
-<p>回到<code>$LOAD_PATH</code>，让我们看看它的值，</p>
-
-<p><code>ruby
-["/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1",
- "/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux"]
-</code></p>
-
-<p>下面的方法可以将目录动态加入<code>$LOAD_PATH</code></p>
-
-<p><code>ruby
-$:.unshift File.expand_path("../lib", __FILE__)
-</code></p>
-
-<p>因为ruby以第一个找到的为准，
-所以用unshift，可以提高些许效率。</p>
-
-<hr />
-
-<p>最后，一点小发现，
-rspec是会自动加载<code>.lib</code>和<code>.spec</code>的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[a draft]]></title>
-    <link href="http://thisiskun.github.com/blog/2012/03/24/a-draft/"/>
-    <updated>2012-03-24T17:26:00+08:00</updated>
-    <id>http://thisiskun.github.com/blog/2012/03/24/a-draft</id>
-    <content type="html"><![CDATA[<h1>I not gonna publish this post.</h1>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello Octopress!]]></title>
-    <link href="http://thisiskun.github.com/blog/2012/03/22/hello-octopress/"/>
-    <updated>2012-03-22T22:42:00+08:00</updated>
-    <id>http://thisiskun.github.com/blog/2012/03/22/hello-octopress</id>
-    <content type="html"><![CDATA[<p>Hello Octopress!</p>
-
-<p>This is my first post!</p>
-
-<p>关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～</p>
-
-<p>你好，Octopress！</p>
 ]]></content>
   </entry>
   
