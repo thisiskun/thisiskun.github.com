@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-04-06T16:59:32+08:00</updated>
+  <updated>2012-04-06T17:12:57+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -556,15 +556,6 @@ name填<code>foobar.github.com</code>。</p>
 <li><a href="http://markdown.tw/">markdown（中文）</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[a draft]]></title>
-    <link href="http://thisiskun.github.com/blog/2012/03/24/a-draft/"/>
-    <updated>2012-03-24T17:26:00+08:00</updated>
-    <id>http://thisiskun.github.com/blog/2012/03/24/a-draft</id>
-    <content type="html"><![CDATA[<h1>I not gonna publish this post.</h1>
 ]]></content>
   </entry>
   
