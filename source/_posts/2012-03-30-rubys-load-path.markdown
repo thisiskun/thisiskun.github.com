@@ -79,6 +79,6 @@ $:.unshift File.expand_path("../lib", __FILE__)
 ---------------------------------------
 
 最后，一点小发现，
-rspec是会自动加载`lib/`和`.spec/`的。
+rspec是会自动加载`lib/`和`spec/`的。
 
 [1]: http://stackoverflow.com/questions/4333286/ruby-require-vs-require-relative-best-practice-to-workaround-running-in-both
