@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-04-06T17:12:57+08:00</updated>
+  <updated>2012-04-11T21:44:25+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -357,7 +357,7 @@ ruby去哪里寻找这个文件呢？
 <hr />
 
 <p>最后，一点小发现，
-rspec是会自动加载<code>.lib</code>和<code>.spec</code>的。</p>
+rspec是会自动加载<code>lib/</code>和<code>.spec/</code>的。</p>
 ]]></content>
   </entry>
   
