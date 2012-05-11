@@ -3,7 +3,7 @@ layout: post
 title: "linux折腾记"
 date: 2012-05-09 11:35
 comments: true
-categories: 
+categories: linux
 ---
 
 工欲善其事，必先利其器，想成为一个更好的code，开发环境当然是linux 了
