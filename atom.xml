@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-04-11T21:44:25+08:00</updated>
+  <updated>2012-05-11T16:08:18+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -12,6 +12,216 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[linux折腾记]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/05/09/zheteng-linux/"/>
+    <updated>2012-05-09T11:35:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/05/09/zheteng-linux</id>
+    <content type="html"><![CDATA[<p>工欲善其事，必先利其器，想成为一个更好的code，开发环境当然是linux 了
+（mac 没用过，穷逼买不起）。
+趁着ubuntu 12.04发布之际，赶紧装上体验一把。
+以下是折腾过程的记录，流水帐。</p>
+
+<h2>安装ubuntu</h2>
+
+<p>新硬盘一颗，刻碟，装上。
+没有装windows 双系统，为什么呢？我会告诉你我很懒吗？</p>
+
+<p>默认是gnome 桌面系统，还有unity，用起来感觉就是，别扭。
+所以就安装了kde 桌面，</p>
+
+<h2>安装kde</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install kubuntu-desktop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这也是我第一次接触kde 桌面，一开始感觉开机慢了，还不太习惯，而且由于双显卡驱动没装好，
+特效开启不了，感觉很不爽啊。</p>
+
+<h2>正确安装双显卡驱动</h2>
+
+<p>我用的笔记本是hp 的dv3-4042tx，外观山寨苹果，不过工业设计吗，很多不合理的地方。
+usb 接口只有两个，都在右边，而且靠的非常近。
+另外要说的就是触摸板，一体化的触摸板，两个按键跟触摸区域无缝相连的，触摸区域大了没错，
+不错按键手感就非常糟糕，还经常出现按键失灵的情况。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>lspci | grep VGA
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>00:02.0 VGA compatible controller: Intel Corporation Core Processor Integrated Graphics Controller <span class="o">(</span>rev 02<span class="o">)</span>
+</span><span class='line'>01:00.0 VGA compatible controller: Advanced Micro Devices <span class="o">[</span>AMD<span class="o">]</span> nee ATI Manhattan <span class="o">[</span>Mobility Radeon HD 5400 Series<span class="o">]</span> <span class="o">(</span>rev ff<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到是intel 的集成显卡和ati独立显卡，装好了系统之后显示效果就一直不好，特效什么的也开不了，
+所以就google 怎么正确的安装驱动，参考了这篇帖子。  <br/>
+<a href="http://forum.ubuntu.com.cn/viewtopic.php?f=42&amp;t=350772">http://forum.ubuntu.com.cn/viewtopic.php?f=42&amp;t=350772</a></p>
+
+<p>按照该帖的指导，并没有成功安装ati的闭源驱动，开机无法启动图形界面了，无奈只好卸载重启。
+没想到重新开机，特效什么的全都出来了！柳暗花明又一村，有木有！</p>
+
+<p>现在猜想，可能是</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo sh /usr/share/ati/fglrx-uninstall.sh
+</span><span class='line'>sudo apt-get remove --purge fglrx fglrx_* fglrx-amdcccle* fglrx-dev*
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里把ubuntu 安装的驱动给卸载了，所以就没有安装ati 显卡的驱动了，
+而intel 的显卡则正常工作，特效什么的毫无压力，所以就正常了。</p>
+
+<h2>关闭独立显卡</h2>
+
+<p>现在集成显卡正常工作了，但是两块显卡其实都是通电的，温度有点高，而且不节能环保啊。
+参照这里搞定。     <br/>
+<a href="http://linuxtoy.org/archives/how-to-use-vga-switcheroo-disable-video-card-linux-kms.html">http://linuxtoy.org/archives/how-to-use-vga-switcheroo-disable-video-card-linux-kms.html</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat /sys/kernel/debug/vgaswitcheroo/switch
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出大致如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>0:IGD:+:Pwr:0000:00:02.0
+</span><span class='line'>1:DIS: :Pwr:0000:01:00.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>两个都是Pwr。</p>
+
+<p>编辑/etc/rc.local：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chown yourname /sys/kernel/debug/vgaswitcheroo/switch
+</span><span class='line'><span class="nb">echo </span>ON &gt; /sys/kernel/debug/vgaswitcheroo/switch
+</span><span class='line'><span class="nb">echo </span>IGD &gt; /sys/kernel/debug/vgaswitcheroo/switch
+</span><span class='line'><span class="nb">echo </span>OFF &gt; /sys/kernel/debug/vgaswitcheroo/switch
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ok,重启，可以看到独立显卡一项是Off 的了。</p>
+
+<h2>设置fcitx</h2>
+
+<p>输入法使用的是fcitx，发现在konsole 和rekonq 下无法激活，
+搜索了下，发现网上很多问这问题的，后来在官方wiki 上找到解决方法。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install qt4-qtconfig
+</span><span class='line'>sudo qtconfig
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行qtconfig (名称可能根据你的发行版有所不同)，选择第三个标签，确认fcitx 是在默认输入法组合框中中。</p>
+
+<h2>oh-my-zsh</h2>
+
+<p>这个Ryan Bates 大神在railcasts 上介绍过了，默认配置就很好用了，
+有特殊需求可以进一步折腾。</p>
+
+<h2>ruby &amp; rails</h2>
+
+<p>速配参考ruby-china 的<a href="http://ruby-china.org/wiki/install_ruby_guide">wiki 文档</a>，
+ruby当然是用rvm来装了，如果报<code>rvm is not a funciotn</code>，
+把终端改为login-shell，并确保正确加载<code>~/,bash_profile</code>和<code>~/.bashrc</code>
+另外</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install libsqlite3-dev
+</span><span class='line'>sudo apt-get install nodejs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以让你的第一个rails demo 跑起来。</p>
+
+<h2>git &amp; github</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global user,name yourname
+</span><span class='line'>git config --global user.email youremail
+</span><span class='line'>git config --global core.editor vi
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-keygen -t rsa -C <span class="s2">&quot;your_email@youremail.com&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后将生成的ssh 公钥传到github 就好了。</p>
+
+<h2>vim</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~
+</span><span class='line'>git clone git@github.com:thisiskun/dotvim.git ~/.vim
+</span><span class='line'>ln -s ~/.vim/vimrc ~/.vimrc
+</span><span class='line'>ln -s ~/.vim/gvimrc ~/.gvimrc
+</span><span class='line'>mkdir ~/.vimbackup
+</span><span class='line'>mkdir ~/.vimundodir
+</span><span class='line'><span class="nb">cd</span> ~/.vim
+</span><span class='line'>git submodule init
+</span><span class='line'>git submodule update
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不fork 一下吗？</p>
+
+<h2>好软件</h2>
+
+<ul>
+<li><strong>Guake</strong> 快捷下拉终端，超级方便啊</li>
+<li><strong>krunner</strong> alt-f2调出，感觉跟window的win+r差不多，这个软件很低调，找半天才找到名字</li>
+<li><strong>amaorok</strong> 音乐播放软件，用户体验很赞，logo超帅，不过貌似中文支持不太好</li>
+<li><strong>dolphin</strong> 文件管理软件</li>
+<li><strong>konsole</strong> 终端，多套配置可选，方便添加书签</li>
+<li><strong>firefox</strong> 这个说来话长</li>
+</ul>
+
+
+<h2>the end</h2>
+
+<p>终于把linux 桌面环境配置的比较顺手了，折腾就是一个这样的过程：
+每当你想，没辙了，其实，再转个弯就到了。
+总体感觉，kde 桌面非常棒，完爆gonme。
+之前有装过archlinux，感觉在知其所以然的情况下，用archlinux 应该会更好更方便，
+配置简洁明了，滚动升级非常诱人，不过更适合熟手来折腾。
+好了，折腾了那么多，是时候静下心来，干点正事了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby Gems]]></title>
@@ -357,7 +567,7 @@ ruby去哪里寻找这个文件呢？
 <hr />
 
 <p>最后，一点小发现，
-rspec是会自动加载<code>lib/</code>和<code>.spec/</code>的。</p>
+rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
 ]]></content>
   </entry>
   

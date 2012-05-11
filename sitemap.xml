@@ -2,30 +2,34 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/03/22/hello-octopress/</loc>
-        <lastmod>2012-03-24T17:30:34+08:00</lastmod>
+        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress/</loc>
-        <lastmod>2012-03-24T20:37:47+08:00</lastmod>
+        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/03/30/rubys-load-path/</loc>
-        <lastmod>2012-04-11T21:44:19+08:00</lastmod>
+        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/04/06/ruby-gems/</loc>
-        <lastmod>2012-04-06T16:59:17+08:00</lastmod>
+        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
     </url>
     <url>
-        <loc>http://thisiskun.github.com/blog/archives/</loc>
-        <lastmod>2012-04-11T21:44:19+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://thisiskun.github.com/about/</loc>
-        <lastmod>2012-03-24T19:22:35+08:00</lastmod>
+        <loc>http://thisiskun.github.com/blog/2012/05/09/zheteng-linux/</loc>
+        <lastmod>2012-05-11T15:50:24+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/</loc>
-        <lastmod>2012-04-11T21:44:19+08:00</lastmod>
+        <lastmod>2012-05-11T15:50:24+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://thisiskun.github.com/blog/archives/</loc>
+        <lastmod>2012-05-11T15:50:24+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://thisiskun.github.com/about/</loc>
+        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
     </url>
 </urlset>

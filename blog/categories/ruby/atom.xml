@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-04-11T21:44:25+08:00</updated>
+  <updated>2012-05-11T16:08:18+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -290,7 +290,7 @@ $:.unshift File.expand_path("../lib", __FILE__)
 <hr />
 
 <p>最后，一点小发现，
-rspec是会自动加载<code>lib/</code>和<code>.spec/</code>的。</p>
+rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
 ]]></content>
   </entry>
   
