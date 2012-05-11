@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "linux"
+title: "linux折腾记"
 date: 2012-05-09 11:35
 comments: true
 categories: 
@@ -13,7 +13,7 @@ categories:
 
 ## 安装ubuntu
 
-心硬盘一颗，刻碟，装上。
+新硬盘一颗，刻碟，装上。
 没有装windows双系统，为什么呢？我会告诉你我很懒吗？
 
 默认是gnome桌面系统，还有unity，用起来感觉就是，别扭。
@@ -35,25 +35,25 @@ usb接口只有两个，都在右边，而且靠的非常近。
 另外要说的就是触摸板，一体化的触摸板，两个按键跟触摸区域无缝相连的，触摸区域大了没错，
 不错按键手感就非常糟糕，还经常出现按键失灵的情况。
 
-```bash
+``` bash
 lspci | grep VGA
 ```
 
-```bash
+``` bash
 00:02.0 VGA compatible controller: Intel Corporation Core Processor Integrated Graphics Controller (rev 02)
 01:00.0 VGA compatible controller: Advanced Micro Devices [AMD] nee ATI Manhattan [Mobility Radeon HD 5400 Series] (rev ff)
 ```
 
-是intel的集成显卡和ati独立显卡，装好了系统之后显示效果就一直不好，特效什么的也开不了，
+可以看到是intel的集成显卡和ati独立显卡，装好了系统之后显示效果就一直不好，特效什么的也开不了，
 所以就google怎么正确的安装驱动，参考了这篇帖子。
-http://forum.ubuntu.com.cn/viewtopic.php?f=42&t=350772
+[http://forum.ubuntu.com.cn/viewtopic.php?f=42&t=350772] (http://forum.ubuntu.com.cn/viewtopic.php?f=42&t=350772)
 
 按照该帖的指导，并没有成功安装ati的闭源驱动，开机无法启动图形界面了，无奈只好卸载重启。
 没想到重新开机，特效什么的全都出来了！柳暗花明又一村，有木有！
 
 现在猜想，可能是
 
-```bash
+``` bash
 sudo sh /usr/share/ati/fglrx-uninstall.sh
 sudo apt-get remove --purge fglrx fglrx_* fglrx-amdcccle* fglrx-dev*
 ```
@@ -65,14 +65,15 @@ sudo apt-get remove --purge fglrx fglrx_* fglrx-amdcccle* fglrx-dev*
 
 现在集成显卡正常工作了，但是两块显卡其实都是通电的，温度有点高，而且不节能环保啊。
 参照这里搞定。
-http://linuxtoy.org/archives/how-to-use-vga-switcheroo-disable-video-card-linux-kms.html
+[http://linuxtoy.org/archives/how-to-use-vga-switcheroo-disable-video-card-linux-kms.html]
+(http://linuxtoy.org/archives/how-to-use-vga-switcheroo-disable-video-card-linux-kms.html)
 
-```bash
+``` bash
 cat /sys/kernel/debug/vgaswitcheroo/switch
 ```
 输出大致如下：
 
-```bash
+``` bash
     0:IGD:+:Pwr:0000:00:02.0
     1:DIS: :Pwr:0000:01:00.0
 ```
@@ -81,7 +82,7 @@ cat /sys/kernel/debug/vgaswitcheroo/switch
 
 编辑/etc/rc.local：
 
-```bash
+``` bash
 chown yourname /sys/kernel/debug/vgaswitcheroo/switch
 echo ON > /sys/kernel/debug/vgaswitcheroo/switch
 echo IGD > /sys/kernel/debug/vgaswitcheroo/switch
@@ -96,7 +97,7 @@ ok,重启，可以看到独立显卡一项是Off的了。
 输入法使用的是fcitx，发现在konsole和rekonq下无法激活，
 搜索了下，发现网上很多问这问题的，后来在官方wiki上找到解决方法。
 
-```bash
+``` bash
 sudo apt-get install qt4-qtconfig
 sudo qtconfig
 ```
@@ -110,13 +111,12 @@ sudo qtconfig
 
 ## ruby & rails
 
-速配参考ruby-china的wiki文档，
-http://ruby-china.org/wiki/install_ruby_guide
+速配参考ruby-china的[wiki文档](http://ruby-china.org/wiki/install_ruby_guide)，
 ruby当然是用rvm来装了，如果报`rvm is not a funciotn`，
 把终端改为login-shell，并确保正确加载`~/,bash_profile`和`~/.bashrc`
 另外
 
-```bash
+``` bash
 sudo apt-get install libsqlite3-dev
 sudo apt-get install nodejs
 ```
@@ -125,13 +125,13 @@ sudo apt-get install nodejs
 
 ## git & github
 
-```bash
+``` bash
 git config --global user,name yourname
 git config --global user.email youremail
 git config --global core.editor vi
 ```
 
-```bash
+``` bash
 ssh-keygen -t rsa -C "your_email@youremail.com"
 ```
 
@@ -139,7 +139,7 @@ ssh-keygen -t rsa -C "your_email@youremail.com"
 
 ## vim
 
-```bash
+``` bash
 cd ~
 git clone git@github.com:thisiskun/dotvim.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
