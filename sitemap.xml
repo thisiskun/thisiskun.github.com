@@ -2,34 +2,38 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/03/22/hello-octopress/</loc>
-        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/03/24/how-to-build-a-blog-with-octopress/</loc>
-        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/03/30/rubys-load-path/</loc>
-        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/04/06/ruby-gems/</loc>
-        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/blog/2012/05/09/zheteng-linux/</loc>
-        <lastmod>2012-05-11T16:12:37+08:00</lastmod>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
     <url>
-        <loc>http://thisiskun.github.com/</loc>
-        <lastmod>2012-05-11T16:12:37+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://thisiskun.github.com/blog/archives/</loc>
-        <lastmod>2012-05-11T16:12:37+08:00</lastmod>
+        <loc>http://thisiskun.github.com/blog/2012/07/07/ack_better_than_grep/</loc>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://thisiskun.github.com/about/</loc>
-        <lastmod>2012-05-09T10:45:51+08:00</lastmod>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://thisiskun.github.com/blog/archives/</loc>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://thisiskun.github.com/</loc>
+        <lastmod>2012-07-07T19:46:11+08:00</lastmod>
     </url>
 </urlset>

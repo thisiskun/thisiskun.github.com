@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-05-11T16:13:40+08:00</updated>
+  <updated>2012-07-07T19:50:09+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ack]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/07/07/ack_better_than_grep/"/>
+    <updated>2012-07-07T18:33:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/07/07/ack_better_than_grep</id>
+    <content type="html"><![CDATA[<p>首先吐槽下ack 的域名，直接是<a href="http://betterthangrep.com">http://betterthangrep.com</a> ，
+这让<code>grep</code> 情何以勘。。。</p>
+
+<h2>什么是ack</h2>
+
+<p><code>ack</code> 是一个类似于<code>grep</code> 并为程序员专门优化过的字符串搜索工具。</p>
+
+<h2>安装ack</h2>
+
+<p>```bash</p>
+
+<h1>for ubuntu</h1>
+
+<p>sudo apt-get install ack-grep
+```</p>
+
+<p>因为已经有一个软件叫<code>ack</code> 了，所以可以：</p>
+
+<p><code>bash
+alias ack="ack-grep"
+</code></p>
+
+<h2>Why ack?</h2>
+
+<ul>
+<li><p>快速</p>
+
+<p><code>ack</code> 只搜索必需的文件。</p></li>
+<li><p>更好的搜索</p>
+
+<p><code>ack</code> 默认忽略了<code>SVN</code> <code>Git</code> 以及其他版本控制系统的非源代码文件。</p></li>
+<li><p>为源代码搜索而设计</p>
+
+<p>不同于搜索文本的<code>grep</code>，<code>ack</code> 是专门搜索源代码的。</p></li>
+<li><p>高度的可移植性</p>
+
+<p><code>ack</code> 是纯正的<code>perl</code> 脚本，可以在安装了<code>perl</code> 的<code>windows</code> 上运行。</p></li>
+<li><p>免费开源</p></li>
+</ul>
+
+
+<h2>小技巧</h2>
+
+<ul>
+<li><p><code>--smart-case</code>，与vim的<code>smartcase</code> 类似，查找字符串全部小写着忽略大小写。</p></li>
+<li><p><code>-a</code> 查找全部文件，因为<code>ack</code>
+为提高速度而忽略掉一些文件，所以有时有必要加上这个选项，
+最常见的就是查找<code>ruby</code> 的某些文件，因为很多不能被识别为源代码文件。</p></li>
+<li><p><code>-Q</code> 省去表达式中转义的麻烦。</p></li>
+<li><p><code>--ruby</code> 只查找<code>ruby</code> 文件，类似的有<code>--perl</code>。</p></li>
+<li><p><code>show-types</code> 显示文件类型。</p></li>
+</ul>
+
+
+<p>更多的可以<code>--help</code> 查看。</p>
+
+<h2>ack.vim</h2>
+
+<p><code>vim</code> 插件，可以于github <a href="https://github.com/mileszs/ack.vim.git">下载</a>。</p>
+
+<p>.vimrc 中加入</p>
+
+<p><code>vim
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+</code></p>
+
+<p>我喜欢加入<code>--smart-case</code>。</p>
+
+<p>之后在<code>vim</code> 中可以用<code>Ack</code> 等几个命令查找，结果会显示在<code>quickfix list</code> 中，
+非常方便。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[linux折腾记]]></title>
