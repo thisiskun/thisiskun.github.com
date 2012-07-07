@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-07-07T19:50:09+08:00</updated>
+  <updated>2012-07-07T19:52:37+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ack]]></title>
+    <title type="html"><![CDATA[Ack, Better Than Grep]]></title>
     <link href="http://thisiskun.github.com/blog/2012/07/07/ack_better_than_grep/"/>
     <updated>2012-07-07T18:33:00+08:00</updated>
     <id>http://thisiskun.github.com/blog/2012/07/07/ack_better_than_grep</id>
