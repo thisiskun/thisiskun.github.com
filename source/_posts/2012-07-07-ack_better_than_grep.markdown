@@ -3,7 +3,7 @@ layout: post
 title: "Ack"
 date: 2012-07-07 18:33
 comments: true
-categories: 
+categories: [vim, linux]
 ---
 
 首先吐槽下ack 的域名，直接是[http://betterthangrep.com](http://betterthangrep.com) ，
