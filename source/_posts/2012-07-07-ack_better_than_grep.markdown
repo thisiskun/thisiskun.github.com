@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ack"
+title: "Ack, Better Than Grep"
 date: 2012-07-07 18:33
 comments: true
 categories: [vim, linux]
