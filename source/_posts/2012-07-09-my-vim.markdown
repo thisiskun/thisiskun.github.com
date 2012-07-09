@@ -1,0 +1,80 @@
+---
+layout: post
+title: "我的vim"
+date: 2012-07-09 16:50
+comments: true
+categories: [linux, vim]
+---
+
+使用`vim`也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。
+
+下面是我的`vim`的一些配置，你可以在`github` 上找到
+[它](https://github.com/thisiskun/dotvim)。
+
+## 同步备份vim配置
+
+`vim` 的配置文件默认是`～/.vim/` 以及`~/.vimrc` 和`~/.gvimrc`，在`github`
+建立一个`repo`， 不仅可以方便的同步备份，还可以跟别人分享你的配置。
+
+
+## 插件管理vundle
+
+感谢`pathogen` 和`vundle` 这样的插件，让`vim` 插件管理起来是如此的轻松。
+经过对比，最后还是选用`vundle`，`pathogen` 采用的是`git
+submodule`，总是没那么好用。
+`vundle` 使用起来跟`bundle`
+十分的相似，一个配置文件（`vimrc`），几个命令（`BundleInstall(!)`，`BundleClean(1)`）
+就搞定。
+`vundle` 可以从`github`，`vim.org`或者指定`git` repo上同步插件。
+如果你使用`github` 管理`.vim` 目录，那记得在`.gitignore` 中加入
+
+```bash
+bundle\
+```
+
+## 更好的snipmate
+
+`snipmate` 提供了很好的代码补全功能，scrooloose 提供了更好的
+[snippets](https://github.com/thisiskun/snipmate-snippets.git)。
+fork 这个项目，然后加入`vundle`
+的插件列表中，这样就可以方便的管理扩展这些`snippets`了。
+最后在`vimrc` 中设置`snippets` 的目录。
+
+```vim
+let g:snippets_dir="~/.vim/bundle/snipmate-snippets/"
+```
+
+## 快速安装脚本
+
+虽然按照前面的设定，要在一台新机器上同步`vim` 配置很方便，
+但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。
+
+```bash
+git clone git@github.com:thisiskun/dotvim.git ~/.vim
+```
+
+运行`setup.sh` 脚本：
+
+```bash setup.sh
+#!/bin/sh
+# setup rc files
+ln -s ~/.vim/vimrc ~/.vimrc
+ln -s ~/.vim/gvimrc ~/.gvimrc
+
+# back and undo directory
+mkdir ~/.vimbackup
+mkdir ~/.vimundodir
+
+# setup vundle
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+vim +BundleInstall +qa
+```
+
+---------------------------------------
+
+参考：
+
++ [coming home to vim](http://stevelosh.com/blog/2010/09/coming-home-to-vim/)
+
++ [vimcasts.org](http://vimcasts.org/)
+
