@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hello Octopress! - This is Kun's Blog.</title>
+  <title>我的vim - This is Kun's Blog.</title>
   <meta name="author" content="Kun Chen">
 
   
-  <meta name="description" content="Hello Octopress! This is my first post! 关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～ 你好，Octopress！
-">
+  <meta name="description" content="使用vim也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。 下面是我的vim的一些配置，你可以在github 上找到
+它。 同步备份vim配置 vim 的配置文件默认是～/.vim/ 以及~/.vimrc 和~/.gvimrc，在github
+建立一个repo， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://thisiskun.github.com/blog/2012/03/22/hello-octopress">
+  <link rel="canonical" href="http://thisiskun.github.com/blog/2012/07/09/my-vim">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +82,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress!</h1>
+      <h1 class="entry-title">我的vim</h1>
     
     
       <p class="meta">
@@ -97,20 +98,100 @@
   
 
 
-<time datetime="2012-03-22T22:42:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
+<time datetime="2012-07-09T16:50:00+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Hello Octopress!</p>
+<div class="entry-content"><p>使用<code>vim</code>也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
 
-<p>This is my first post!</p>
+<p>下面是我的<code>vim</code>的一些配置，你可以在<code>github</code> 上找到
+<a href="https://github.com/thisiskun/dotvim">它</a>。</p>
 
-<p>关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～</p>
+<h2>同步备份vim配置</h2>
 
-<p>你好，Octopress！</p>
+<p><code>vim</code> 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，在<code>github</code>
+建立一个<code>repo</code>， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+
+<h2>插件管理vundle</h2>
+
+<p>感谢<code>pathogen</code> 和<code>vundle</code> 这样的插件，让<code>vim</code> 插件管理起来是如此的轻松。
+经过对比，最后还是选用<code>vundle</code>，<code>pathogen</code> 采用的是<code>git
+submodule</code>，总是没那么好用。
+<code>vundle</code> 使用起来跟<code>bundle</code>
+十分的相似，一个配置文件（<code>vimrc</code>），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
+就搞定。
+<code>vundle</code> 可以从<code>github</code>，<code>vim.org</code>或者指定<code>git</code> repo上同步插件。
+如果你使用<code>github</code> 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle<span class="se">\</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>更好的snipmate</h2>
+
+<p><code>snipmate</code> 提供了很好的代码补全功能，scrooloose 提供了更好的
+<a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
+fork 这个项目，然后加入<code>vundle</code>
+的插件列表中，这样就可以方便的管理扩展这些<code>snippets</code>了。
+最后在<code>vimrc</code> 中设置<code>snippets</code> 的目录。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> g:snippets_dir<span class="p">=</span><span class="s2">&quot;~/.vim/bundle/snipmate-snippets/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>快速安装脚本</h2>
+
+<p>虽然按照前面的设定，要在一台新机器上同步<code>vim</code> 配置很方便，
+但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:thisiskun/dotvim.git ~/.vim
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行<code>setup.sh</code> 脚本：</p>
+
+<figure class='code'><figcaption><span>setup.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="c"># setup rc files</span>
+</span><span class='line'>ln -s ~/.vim/vimrc ~/.vimrc
+</span><span class='line'>ln -s ~/.vim/gvimrc ~/.gvimrc
+</span><span class='line'>
+</span><span class='line'><span class="c"># back and undo directory</span>
+</span><span class='line'>mkdir ~/.vimbackup
+</span><span class='line'>mkdir ~/.vimundodir
+</span><span class='line'>
+</span><span class='line'><span class="c"># setup vundle</span>
+</span><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</span><span class='line'>vim +BundleInstall +qa
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>参考：</p>
+
+<ul>
+<li><p><a href="http://stevelosh.com/blog/2010/09/coming-home-to-vim/">coming home to vim</a></p></li>
+<li><p><a href="http://vimcasts.org/">vimcasts.org</a></p></li>
+</ul>
+
 </div>
 
 
@@ -133,12 +214,12 @@
   
 
 
-<time datetime="2012-03-22T22:42:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
+<time datetime="2012-07-09T16:50:00+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
   
 </span>
 
@@ -147,7 +228,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://thisiskun.github.com/blog/2012/03/22/hello-octopress/" data-via="thisiskun" data-counturl="http://thisiskun.github.com/blog/2012/03/22/hello-octopress/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://thisiskun.github.com/blog/2012/07/09/my-vim/" data-via="thisiskun" data-counturl="http://thisiskun.github.com/blog/2012/07/09/my-vim/" >Tweet</a>
   
   
   
@@ -156,8 +237,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/07/07/ack_better_than_grep/" title="Previous Post: Ack, Better Than Grep">&laquo; Ack, Better Than Grep</a>
       
-        <a class="basic-alignment right" href="/blog/2012/03/24/a-draft/" title="Next Post: a draft">a draft &raquo;</a>
       
     </p>
   </footer>
@@ -278,8 +359,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://thisiskun.github.com/blog/2012/03/22/hello-octopress/';
-        var disqus_url = 'http://thisiskun.github.com/blog/2012/03/22/hello-octopress/';
+        var disqus_identifier = 'http://thisiskun.github.com/blog/2012/07/09/my-vim/';
+        var disqus_url = 'http://thisiskun.github.com/blog/2012/07/09/my-vim/';
         var disqus_script = 'embed.js';
       
     (function () {

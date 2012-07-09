@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-07-07T19:52:37+08:00</updated>
+  <updated>2012-07-09T21:11:46+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -12,6 +12,101 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[我的vim]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/07/09/my-vim/"/>
+    <updated>2012-07-09T16:50:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/07/09/my-vim</id>
+    <content type="html"><![CDATA[<p>使用<code>vim</code>也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
+
+<p>下面是我的<code>vim</code>的一些配置，你可以在<code>github</code> 上找到
+<a href="https://github.com/thisiskun/dotvim">它</a>。</p>
+
+<h2>同步备份vim配置</h2>
+
+<p><code>vim</code> 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，在<code>github</code>
+建立一个<code>repo</code>， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+
+<h2>插件管理vundle</h2>
+
+<p>感谢<code>pathogen</code> 和<code>vundle</code> 这样的插件，让<code>vim</code> 插件管理起来是如此的轻松。
+经过对比，最后还是选用<code>vundle</code>，<code>pathogen</code> 采用的是<code>git
+submodule</code>，总是没那么好用。
+<code>vundle</code> 使用起来跟<code>bundle</code>
+十分的相似，一个配置文件（<code>vimrc</code>），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
+就搞定。
+<code>vundle</code> 可以从<code>github</code>，<code>vim.org</code>或者指定<code>git</code> repo上同步插件。
+如果你使用<code>github</code> 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle<span class="se">\</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>更好的snipmate</h2>
+
+<p><code>snipmate</code> 提供了很好的代码补全功能，scrooloose 提供了更好的
+<a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
+fork 这个项目，然后加入<code>vundle</code>
+的插件列表中，这样就可以方便的管理扩展这些<code>snippets</code>了。
+最后在<code>vimrc</code> 中设置<code>snippets</code> 的目录。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> g:snippets_dir<span class="p">=</span><span class="s2">&quot;~/.vim/bundle/snipmate-snippets/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>快速安装脚本</h2>
+
+<p>虽然按照前面的设定，要在一台新机器上同步<code>vim</code> 配置很方便，
+但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:thisiskun/dotvim.git ~/.vim
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行<code>setup.sh</code> 脚本：</p>
+
+<figure class='code'><figcaption><span>setup.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="c"># setup rc files</span>
+</span><span class='line'>ln -s ~/.vim/vimrc ~/.vimrc
+</span><span class='line'>ln -s ~/.vim/gvimrc ~/.gvimrc
+</span><span class='line'>
+</span><span class='line'><span class="c"># back and undo directory</span>
+</span><span class='line'>mkdir ~/.vimbackup
+</span><span class='line'>mkdir ~/.vimundodir
+</span><span class='line'>
+</span><span class='line'><span class="c"># setup vundle</span>
+</span><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</span><span class='line'>vim +BundleInstall +qa
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>参考：</p>
+
+<ul>
+<li><p><a href="http://stevelosh.com/blog/2010/09/coming-home-to-vim/">coming home to vim</a></p></li>
+<li><p><a href="http://vimcasts.org/">vimcasts.org</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ack, Better Than Grep]]></title>
@@ -846,6 +941,15 @@ name填<code>foobar.github.com</code>。</p>
 <li><a href="http://markdown.tw/">markdown（中文）</a></li>
 </ul>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[a draft]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/03/24/a-draft/"/>
+    <updated>2012-03-24T17:26:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/03/24/a-draft</id>
+    <content type="html"><![CDATA[<h1>I not gonna publish this post.</h1>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-07-07T19:52:37+08:00</updated>
+  <updated>2012-07-09T21:11:46+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[我的vim]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/07/09/my-vim/"/>
+    <updated>2012-07-09T16:50:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/07/09/my-vim</id>
+    <content type="html"><![CDATA[<p>使用<code>vim</code>也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
+
+<p>下面是我的<code>vim</code>的一些配置，你可以在<code>github</code> 上找到
+<a href="https://github.com/thisiskun/dotvim">它</a>。</p>
+
+<h2>同步备份vim配置</h2>
+
+<p><code>vim</code> 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，在<code>github</code>
+建立一个<code>repo</code>， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+
+<h2>插件管理vundle</h2>
+
+<p>感谢<code>pathogen</code> 和<code>vundle</code> 这样的插件，让<code>vim</code> 插件管理起来是如此的轻松。
+经过对比，最后还是选用<code>vundle</code>，<code>pathogen</code> 采用的是<code>git
+submodule</code>，总是没那么好用。
+<code>vundle</code> 使用起来跟<code>bundle</code>
+十分的相似，一个配置文件（<code>vimrc</code>），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
+就搞定。
+<code>vundle</code> 可以从<code>github</code>，<code>vim.org</code>或者指定<code>git</code> repo上同步插件。
+如果你使用<code>github</code> 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
+
+<p><code>bash
+bundle\
+</code></p>
+
+<h2>更好的snipmate</h2>
+
+<p><code>snipmate</code> 提供了很好的代码补全功能，scrooloose 提供了更好的
+<a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
+fork 这个项目，然后加入<code>vundle</code>
+的插件列表中，这样就可以方便的管理扩展这些<code>snippets</code>了。
+最后在<code>vimrc</code> 中设置<code>snippets</code> 的目录。</p>
+
+<p><code>vim
+let g:snippets_dir="~/.vim/bundle/snipmate-snippets/"
+</code></p>
+
+<h2>快速安装脚本</h2>
+
+<p>虽然按照前面的设定，要在一台新机器上同步<code>vim</code> 配置很方便，
+但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
+
+<p><code>bash
+git clone git@github.com:thisiskun/dotvim.git ~/.vim
+</code></p>
+
+<p>运行<code>setup.sh</code> 脚本：</p>
+
+<p>```bash setup.sh</p>
+
+<h1>!/bin/sh</h1>
+
+<h1>setup rc files</h1>
+
+<p>ln -s ~/.vim/vimrc ~/.vimrc
+ln -s ~/.vim/gvimrc ~/.gvimrc</p>
+
+<h1>back and undo directory</h1>
+
+<p>mkdir ~/.vimbackup
+mkdir ~/.vimundodir</p>
+
+<h1>setup vundle</h1>
+
+<p>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+vim +BundleInstall +qa
+```</p>
+
+<hr />
+
+<p>参考：</p>
+
+<ul>
+<li><p><a href="http://stevelosh.com/blog/2010/09/coming-home-to-vim/">coming home to vim</a></p></li>
+<li><p><a href="http://vimcasts.org/">vimcasts.org</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ack, Better Than Grep]]></title>
