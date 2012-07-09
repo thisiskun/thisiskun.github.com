@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-07-09T21:11:46+08:00</updated>
+  <updated>2012-07-09T21:24:21+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Kun Chen]]></name>
@@ -18,26 +18,26 @@
     <link href="http://thisiskun.github.com/blog/2012/07/09/my-vim/"/>
     <updated>2012-07-09T16:50:00+08:00</updated>
     <id>http://thisiskun.github.com/blog/2012/07/09/my-vim</id>
-    <content type="html"><![CDATA[<p>使用<code>vim</code>也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
+    <content type="html"><![CDATA[<p>使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
 
-<p>下面是我的<code>vim</code>的一些配置，你可以在<code>github</code> 上找到
+<p>下面是我的vim 的一些配置，你可以在github 上找到
 <a href="https://github.com/thisiskun/dotvim">它</a>。</p>
 
 <h2>同步备份vim配置</h2>
 
-<p><code>vim</code> 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，在<code>github</code>
-建立一个<code>repo</code>， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+<p>vim 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，github 在
+建立一个repo， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
 
 <h2>插件管理vundle</h2>
 
-<p>感谢<code>pathogen</code> 和<code>vundle</code> 这样的插件，让<code>vim</code> 插件管理起来是如此的轻松。
-经过对比，最后还是选用<code>vundle</code>，<code>pathogen</code> 采用的是<code>git
-submodule</code>，总是没那么好用。
-<code>vundle</code> 使用起来跟<code>bundle</code>
-十分的相似，一个配置文件（<code>vimrc</code>），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
+<p>感谢pathogen 和vundle 这样的插件，让vim 插件管理起来是如此的轻松。
+经过对比，最后还是选用vundle，pathogen 采用的是git
+submodule，总是没那么好用。
+vundle 使用起来跟bundle
+十分的相似，一个配置文件（vimrc），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
 就搞定。
-<code>vundle</code> 可以从<code>github</code>，<code>vim.org</code>或者指定<code>git</code> repo上同步插件。
-如果你使用<code>github</code> 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
+vundle 可以从github，vim.org或者指定git repo上同步插件。
+如果你使用github 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
 
 <p><code>bash
 bundle\
@@ -45,11 +45,11 @@ bundle\
 
 <h2>更好的snipmate</h2>
 
-<p><code>snipmate</code> 提供了很好的代码补全功能，scrooloose 提供了更好的
+<p>snipmate 提供了很好的代码补全功能，scrooloose 提供了更好的
 <a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
-fork 这个项目，然后加入<code>vundle</code>
-的插件列表中，这样就可以方便的管理扩展这些<code>snippets</code>了。
-最后在<code>vimrc</code> 中设置<code>snippets</code> 的目录。</p>
+fork 这个项目，然后加入vundle
+的插件列表中，这样就可以方便的管理扩展这些snippets 了。
+最后在vimrc 中设置snippets 的目录。</p>
 
 <p><code>vim
 let g:snippets_dir="~/.vim/bundle/snipmate-snippets/"
@@ -57,7 +57,7 @@ let g:snippets_dir="~/.vim/bundle/snipmate-snippets/"
 
 <h2>快速安装脚本</h2>
 
-<p>虽然按照前面的设定，要在一台新机器上同步<code>vim</code> 配置很方便，
+<p>虽然按照前面的设定，要在一台新机器上同步vim 配置很方便，
 但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
 
 <p><code>bash
@@ -104,11 +104,11 @@ vim +BundleInstall +qa
     <updated>2012-07-07T18:33:00+08:00</updated>
     <id>http://thisiskun.github.com/blog/2012/07/07/ack_better_than_grep</id>
     <content type="html"><![CDATA[<p>首先吐槽下ack 的域名，直接是<a href="http://betterthangrep.com">http://betterthangrep.com</a> ，
-这让<code>grep</code> 情何以勘。。。</p>
+这让grep 情何以勘。。。</p>
 
 <h2>什么是ack</h2>
 
-<p><code>ack</code> 是一个类似于<code>grep</code> 并为程序员专门优化过的字符串搜索工具。</p>
+<p>ack 是一个类似于grep 并为程序员专门优化过的字符串搜索工具。</p>
 
 <h2>安装ack</h2>
 
@@ -119,7 +119,7 @@ vim +BundleInstall +qa
 <p>sudo apt-get install ack-grep
 ```</p>
 
-<p>因为已经有一个软件叫<code>ack</code> 了，所以可以：</p>
+<p>因为已经有一个软件叫ack 了，所以可以：</p>
 
 <p><code>bash
 alias ack="ack-grep"
@@ -130,16 +130,16 @@ alias ack="ack-grep"
 <ul>
 <li><p>快速</p>
 
-<p><code>ack</code> 只搜索必需的文件。</p></li>
+<p>ack 只搜索必需的文件。</p></li>
 <li><p>更好的搜索</p>
 
-<p><code>ack</code> 默认忽略了<code>SVN</code> <code>Git</code> 以及其他版本控制系统的非源代码文件。</p></li>
+<p>ack 默认忽略了SVN Git 以及其他版本控制系统的非源代码文件。</p></li>
 <li><p>为源代码搜索而设计</p>
 
-<p>不同于搜索文本的<code>grep</code>，<code>ack</code> 是专门搜索源代码的。</p></li>
+<p>不同于搜索文本的grep，ack 是专门搜索源代码的。</p></li>
 <li><p>高度的可移植性</p>
 
-<p><code>ack</code> 是纯正的<code>perl</code> 脚本，可以在安装了<code>perl</code> 的<code>windows</code> 上运行。</p></li>
+<p>ack 是纯正的perl 脚本，可以在安装了perl 的windows 上运行。</p></li>
 <li><p>免费开源</p></li>
 </ul>
 
@@ -148,11 +148,11 @@ alias ack="ack-grep"
 
 <ul>
 <li><p><code>--smart-case</code>，与vim的<code>smartcase</code> 类似，查找字符串全部小写着忽略大小写。</p></li>
-<li><p><code>-a</code> 查找全部文件，因为<code>ack</code>
+<li><p><code>-a</code> 查找全部文件，因ack 为
 为提高速度而忽略掉一些文件，所以有时有必要加上这个选项，
-最常见的就是查找<code>ruby</code> 的某些文件，因为很多不能被识别为源代码文件。</p></li>
+最常见的就是查找ruby 的某些文件，因为很多不能被识别为源代码文件。</p></li>
 <li><p><code>-Q</code> 省去表达式中转义的麻烦。</p></li>
-<li><p><code>--ruby</code> 只查找<code>ruby</code> 文件，类似的有<code>--perl</code>。</p></li>
+<li><p><code>--ruby</code> 只查找ruby 文件，类似的有<code>--perl</code>。</p></li>
 <li><p><code>show-types</code> 显示文件类型。</p></li>
 </ul>
 
@@ -161,7 +161,7 @@ alias ack="ack-grep"
 
 <h2>ack.vim</h2>
 
-<p><code>vim</code> 插件，可以于github <a href="https://github.com/mileszs/ack.vim.git">下载</a>。</p>
+<p>vim 插件，可以于github <a href="https://github.com/mileszs/ack.vim.git">下载</a>。</p>
 
 <p>.vimrc 中加入</p>
 
@@ -171,7 +171,7 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 <p>我喜欢加入<code>--smart-case</code>。</p>
 
-<p>之后在<code>vim</code> 中可以用<code>Ack</code> 等几个命令查找，结果会显示在<code>quickfix list</code> 中，
+<p>之后在vim 中可以用Ack 等几个命令查找，结果会显示在quickfix list 中，
 非常方便。</p>
 ]]></content>
   </entry>

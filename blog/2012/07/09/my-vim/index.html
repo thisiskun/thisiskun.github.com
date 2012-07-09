@@ -9,8 +9,8 @@
   <meta name="author" content="Kun Chen">
 
   
-  <meta name="description" content="使用vim也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。 下面是我的vim的一些配置，你可以在github 上找到
-它。 同步备份vim配置 vim 的配置文件默认是～/.vim/ 以及~/.vimrc 和~/.gvimrc，在github
+  <meta name="description" content="使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。 下面是我的vim 的一些配置，你可以在github 上找到
+它。 同步备份vim配置 vim 的配置文件默认是～/.vim/ 以及~/.vimrc 和~/.gvimrc，github 在
 建立一个repo， &hellip;">
   
 
@@ -105,26 +105,26 @@
   </header>
 
 
-<div class="entry-content"><p>使用<code>vim</code>也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
+<div class="entry-content"><p>使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
 
-<p>下面是我的<code>vim</code>的一些配置，你可以在<code>github</code> 上找到
+<p>下面是我的vim 的一些配置，你可以在github 上找到
 <a href="https://github.com/thisiskun/dotvim">它</a>。</p>
 
 <h2>同步备份vim配置</h2>
 
-<p><code>vim</code> 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，在<code>github</code>
-建立一个<code>repo</code>， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+<p>vim 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，github 在
+建立一个repo， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
 
 <h2>插件管理vundle</h2>
 
-<p>感谢<code>pathogen</code> 和<code>vundle</code> 这样的插件，让<code>vim</code> 插件管理起来是如此的轻松。
-经过对比，最后还是选用<code>vundle</code>，<code>pathogen</code> 采用的是<code>git
-submodule</code>，总是没那么好用。
-<code>vundle</code> 使用起来跟<code>bundle</code>
-十分的相似，一个配置文件（<code>vimrc</code>），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
+<p>感谢pathogen 和vundle 这样的插件，让vim 插件管理起来是如此的轻松。
+经过对比，最后还是选用vundle，pathogen 采用的是git
+submodule，总是没那么好用。
+vundle 使用起来跟bundle
+十分的相似，一个配置文件（vimrc），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
 就搞定。
-<code>vundle</code> 可以从<code>github</code>，<code>vim.org</code>或者指定<code>git</code> repo上同步插件。
-如果你使用<code>github</code> 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
+vundle 可以从github，vim.org或者指定git repo上同步插件。
+如果你使用github 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle<span class="se">\</span>
@@ -133,11 +133,11 @@ submodule</code>，总是没那么好用。
 
 <h2>更好的snipmate</h2>
 
-<p><code>snipmate</code> 提供了很好的代码补全功能，scrooloose 提供了更好的
+<p>snipmate 提供了很好的代码补全功能，scrooloose 提供了更好的
 <a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
-fork 这个项目，然后加入<code>vundle</code>
-的插件列表中，这样就可以方便的管理扩展这些<code>snippets</code>了。
-最后在<code>vimrc</code> 中设置<code>snippets</code> 的目录。</p>
+fork 这个项目，然后加入vundle
+的插件列表中，这样就可以方便的管理扩展这些snippets 了。
+最后在vimrc 中设置snippets 的目录。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> g:snippets_dir<span class="p">=</span><span class="s2">&quot;~/.vim/bundle/snipmate-snippets/&quot;</span>
@@ -146,7 +146,7 @@ fork 这个项目，然后加入<code>vundle</code>
 
 <h2>快速安装脚本</h2>
 
-<p>虽然按照前面的设定，要在一台新机器上同步<code>vim</code> 配置很方便，
+<p>虽然按照前面的设定，要在一台新机器上同步vim 配置很方便，
 但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
