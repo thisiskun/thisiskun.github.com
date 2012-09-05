@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>我的vim - This is Kun's Blog.</title>
+  <title>一日一Gem - Pry - This is Kun's Blog.</title>
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。 下面是我的vim 的一些配置，你可以在github 上找到
-它。 同步备份vim配置 vim 的配置文件默认是～/.vim/ 以及~/.vimrc 和~/.gvimrc，github 在
-建立一个repo， &hellip;">
+  <meta name="description" content="本文主要介绍 Pry 的使用。 什么是 Pry Pry 是一个功能非常强大的工具，目前简单的理解为一个增强版的 irb 和强大的 debug
+工具。 在了解 Pry 之前，先了解下什么是 REPL。 REPL 是 read-eval-print loop，是一种交互式的编程环境，可以用简单的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://thisiskun.github.com/blog/2012/07/09/my-vim">
+  <link rel="canonical" href="http://thisiskun.github.com/blog/2012/09/05/a-gem-a-day-pry">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -83,7 +82,7 @@
   
   <header>
     
-      <h1 class="entry-title">我的vim</h1>
+      <h1 class="entry-title">一日一Gem - Pry</h1>
     
     
       <p class="meta">
@@ -99,7 +98,7 @@
   
 
 
-<time datetime="2012-07-09T16:50:00+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2012</time>
+<time datetime="2012-09-05T00:53:00+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -108,91 +107,136 @@
   </header>
 
 
-<div class="entry-content"><p>使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
+<div class="entry-content"><p>本文主要介绍 Pry 的使用。</p>
 
-<p>下面是我的vim 的一些配置，你可以在github 上找到
-<a href="https://github.com/thisiskun/dotvim">它</a>。</p>
+<h2>什么是 Pry</h2>
 
-<h2>同步备份vim配置</h2>
+<p>Pry 是一个功能非常强大的工具，目前简单的理解为一个增强版的 irb 和强大的 debug
+工具。</p>
 
-<p>vim 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，github 在
-建立一个repo， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+<p>在了解 Pry 之前，先了解下什么是 REPL。</p>
 
-<h2>插件管理vundle</h2>
+<p>REPL 是 read-eval-print loop，是一种交互式的编程环境，可以用简单的 ruby
+代码表示：</p>
 
-<p>感谢pathogen 和vundle 这样的插件，让vim 插件管理起来是如此的轻松。
-经过对比，最后还是选用vundle，pathogen 采用的是git
-submodule，总是没那么好用。
-vundle 使用起来跟bundle
-十分的相似，一个配置文件（vimrc），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
-就搞定。
-vundle 可以从github，vim.org或者指定git repo上同步插件。
-如果你使用github 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle<span class="se">\</span>
+<figure class='code'><figcaption><span>test.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">loop</span> <span class="p">{</span> <span class="nb">p</span> <span class="nb">eval</span> <span class="nb">gets</span> <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>更好的snipmate</h2>
-
-<p>snipmate 提供了很好的代码补全功能，scrooloose 提供了更好的
-<a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
-fork 这个项目，然后加入vundle
-的插件列表中，这样就可以方便的管理扩展这些snippets 了。
-最后在vimrc 中设置snippets 的目录。</p>
+<p>执行这个文件：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> g:snippets_dir<span class="p">=</span><span class="s2">&quot;~/.vim/bundle/snipmate-snippets/&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>快速安装脚本</h2>
-
-<p>虽然按照前面的设定，要在一台新机器上同步vim 配置很方便，
-但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:thisiskun/dotvim.git ~/.vim
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>运行<code>setup.sh</code> 脚本：</p>
-
-<figure class='code'><figcaption><span>setup.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'><span class="c"># setup rc files</span>
-</span><span class='line'>ln -s ~/.vim/vimrc ~/.vimrc
-</span><span class='line'>ln -s ~/.vim/gvimrc ~/.gvimrc
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">1 + 1</span>
+</span><span class='line'><span class="go">2</span>
 </span><span class='line'>
-</span><span class='line'><span class="c"># back and undo directory</span>
-</span><span class='line'>mkdir ~/.vimbackup
-</span><span class='line'>mkdir ~/.vimundodir
-</span><span class='line'>
-</span><span class='line'><span class="c"># setup vundle</span>
-</span><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-</span><span class='line'>vim +BundleInstall +qa
+</span><span class='line'><span class="go">puts &quot;hello&quot;</span>
+</span><span class='line'><span class="go">&quot;hello&quot;</span>
+</span><span class='line'><span class="go">nil</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<hr />
+<p>可以看到，使用 REPL 非常的简单优雅，可以马上看到执行结果以及返回值，
+REPL 对于学习一门新的语言来说是非常直观的。</p>
 
-<p>参考：</p>
+<h2>安装以及配置</h2>
+
+<p>安装 pry：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install pry pry-doc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>跟 irb 以及其他 *nix 软件一样，你可以使用 rc 文件配置： <code>~/.pryc</code> 。</p>
+
+<h2>功能介绍</h2>
+
+<p>打开一个终端，输入 <code>pry</code>，就开始了。</p>
+
+<p>输入 <code>help</code> 可以查看可用的命令了，如果要获取某个命令的详细帮助，可以在后面加
+<code>-h</code> 选项。</p>
+
+<p>主要的命令有：</p>
 
 <ul>
-<li><p><a href="http://stevelosh.com/blog/2010/09/coming-home-to-vim/">coming home to vim</a></p></li>
-<li><p><a href="http://vimcasts.org/">vimcasts.org</a></p></li>
+<li><p><strong>cd</strong></p>
+
+<p>改变当前上下文，既是改变 <code>self</code> 对象。
+打开一个 <code>pry</code>，实际上我现在是在 <code>main</code> 对象上，在 pry 的 prompt
+上也可以看到当前 <code>self</code>。
+<code>cd Array</code> 之后，<code>self</code> 就变为 <code>Array</code> 了。</p></li>
+<li><p><strong>ls</strong></p>
+
+<p>列出 <code>self</code> 的方法，实例变量，本地变量等。
+如果不指定对象就列出 <code>self</code> 的。</p></li>
+<li><p><strong>show-doc</strong></p>
+
+<p>显示注释文档。</p></li>
+<li><p><strong>show-method</strong></p>
+
+<p>显示代码。</p></li>
+<li><p><strong>edit-method</strong></p>
+
+<p>打开编辑器，编辑指定的方法。
+可以直接修改在 <code>pry</code> 中定义的方法，免去重复录入的烦恼，
+或者在 debug 的过程中直接修改方法，方便调试。</p></li>
+<li><p><strong>.shell-command</strong></p>
+
+<p>在 pry 中直接执行 shell command</p></li>
+<li><p><strong>debug</strong></p>
+
+<p>在需要处加入 <code>binding.pry</code> 即可设置断点，可以用 pry-debugger 这个 gem
+来增强。</p></li>
+</ul>
+
+
+<p>当然这里只是列出了一些比较常用的功能，
+pry 最让我欣喜的一点就是通过 <code>cd</code> <code>ls</code> 这两个命令，
+可以很好的了解 ruby 的对象模型，
+对 ruby 元编程的学习也很有好处。</p>
+
+<h2>结合 rails 使用</h2>
+
+<h3>rails console</h3>
+
+<p>既然 pry 这么好用，那么当然子 rails 中也要使用它咯。</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;pry-rails&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打开 rails console，就可以在 rails 下用 pry 了。</p>
+
+<h3>debug</h3>
+
+<p>断点处加上 <code>binding.pry</code>，<code>rails s</code> 启动服务，通过浏览器访问，
+这时程序会在断点处停住，debug 完了后 <code>exit-all</code> 即可继续执行。</p>
+
+<hr />
+
+<h2>小结</h2>
+
+<p>pry 目前已经衍生出了很多的增强项目，如 pry-debugger，pry-remote 等等，
+有时间再补充吧。</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><p><a href="http://pryrepl.org">官网</a></p></li>
+<li><p><a href="https://github.com/pry/pry">pry gitub</a></p></li>
+<li><p><a href="http://railscasts.com/episodes/280-pry-with-rails">railscasts</a></p></li>
+<li><p><a href="http://blog.xdite.net/posts/2012/08/12/pry-the-new-debugger/">xdite的blog</a></p></li>
 </ul>
 
 </div>
@@ -217,12 +261,12 @@ fork 这个项目，然后加入vundle
   
 
 
-<time datetime="2012-07-09T16:50:00+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2012</time>
+<time datetime="2012-09-05T00:53:00+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
+    <a class='category' href='/blog/categories/gem/'>gem</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
   
 </span>
 
@@ -238,10 +282,8 @@ fork 这个项目，然后加入vundle
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/07/07/ack_better_than_grep/" title="Previous Post: Ack, Better Than Grep">&laquo; Ack, Better Than Grep</a>
+        <a class="basic-alignment left" href="/blog/2012/08/14/cycling-in-qinghai-lake-day-four/" title="Previous Post: 环骑青海湖 - Day 4">&laquo; 环骑青海湖 - Day 4</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/08/14/cycling-in-qinghai-lake-day-one/" title="Next Post: 环骑青海湖 - Day 1">环骑青海湖 - Day 1 &raquo;</a>
       
     </p>
   </footer>
@@ -309,8 +351,8 @@ fork 这个项目，然后加入vundle
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://thisiskun.github.com/blog/2012/07/09/my-vim/';
-        var disqus_url = 'http://thisiskun.github.com/blog/2012/07/09/my-vim/';
+        var disqus_identifier = 'http://thisiskun.github.com/blog/2012/09/05/a-gem-a-day-pry/';
+        var disqus_url = 'http://thisiskun.github.com/blog/2012/09/05/a-gem-a-day-pry/';
         var disqus_script = 'embed.js';
       
     (function () {

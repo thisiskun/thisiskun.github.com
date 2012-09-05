@@ -9,8 +9,10 @@
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="Hello Octopress! This is my first post! 关闭输入法的自动嵌入才能才gvim里正常输入中文，迟来的中文问候，囧～～ 你好，Octopress！
-">
+  <meta name="description" content="Octopress是一个静态的blog系统，
+虽然副标题是“A blogging framework for hackers”，
+其实只要稍微折腾下，搭建一个blog还是分分钟的事。
+以下记录我是如何搭建这个blog的。 准备工作 安装ruby，Octopress需要的是1.9.2版本， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,6 +87,233 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/03/24/how-to-build-a-blog-with-octopress/">如何使用Octopress搭建blog</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-24T17:44:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/24/how-to-build-a-blog-with-octopress/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://octopress.org/">Octopress</a>是一个静态的blog系统，
+虽然副标题是“A blogging framework for hackers”，
+其实只要稍微折腾下，搭建一个blog还是分分钟的事。
+以下记录我是如何搭建这个blog的。</p>
+
+<h2>准备工作</h2>
+
+<ul>
+<li>安装<a href="http://www.ruby-lang.org/en/">ruby</a>，Octopress需要的是1.9.2版本，
+在ubuntu下使用<a href="http://beginrescueend.com/">rvm</a>安装ruby是不二选择，可以方便的管理ruby以及rails的版本。</li>
+<li>安装<a href="http://git-scm.com/">git</a>，在此不多描述。</li>
+<li>一个<a href="http://github.com">Github</a>帐号，我是部署在github pages上的。
+什么！你还没有Github帐号？赶紧去注册个吧～～</li>
+</ul>
+
+
+<h2>安装Octopress</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git://github.com/imathis/octopress.git my_blog
+</span><span class='line'><span class="nb">cd </span>my_blog
+</span><span class='line'>gem install bundler
+</span><span class='line'>bundle install
+</span><span class='line'>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>基本配置</h2>
+
+<p>配置主要看<code>_config.yml</code>文件，一些基本的选项，注释里写得清晰易懂。
+最sexy的一点就是第三方插件了。
+Octopress是个静态的blog系统，使用<a href="http://thisiskun.disqus.com/">Disqus Comments</a>可以很方便的加入评论功能，
+缺点是使用了javasctipt，对搜索引擎不太友好。
+使用<a href="http://www.google.com/analytics/">Google Analytics</a>可以很方便的进行统计分析。</p>
+
+<h2>部署到Github Pages</h2>
+
+<p>假设你的Github帐号是foobar，那么新建一个repository，
+name填<code>foobar.github.com</code>。</p>
+
+<p>然后生成并部署。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake setup_github_pages
+</span><span class='line'>rake generate
+</span><span class='line'>rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>rake deploy</code>的时候会询问你repository url，
+填入<code>git@github.com:foobar/foobar.github.com.git</code> 即可。</p>
+
+<p>最后不要忘记提交到Github上。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
+</span><span class='line'>git commit -m <span class="s2">&quot;your message&quot;</span>
+</span><span class='line'>git push origin <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在访问<code>http://foobar.github.com</code>看看,是不是有了。</p>
+
+<p>这里说下原来搞得我比较迷惑的地方。部署完毕后，
+本地会有两个git branch，master跟source，
+我们只需要提交source分支即可，master分支我想是本地备份之用。
+另外提交到Github的master分支，是本地source下_deploy目录的master分支，
+说起来可能比较绕口，
+不过看看<code>Rakefile</code>应该会比较明白的。</p>
+
+<p>当然Octopress也可以很方便的部署到gh-pages或者<a href="http://www.heroku.com/">heroku</a>，<a href="http://octopress.org/">官网</a>上都有详细的说明。</p>
+
+<h2>Blogging basic</h2>
+
+<p>Octopress会为你的blog生成<code>/atom.xml</code>或者
+<code>/blog/catagories/&lt;category&gt;/atom.xml</code>。</p>
+
+<h3>Blog posts</h3>
+
+<p>Octopress默认是使用markdown语法，simple and easy。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake new_post<span class="o">[</span><span class="s1">&#39;your title&#39;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就生成一篇新的post在你的<code>source/_post</code>目录下。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>layout: post
+</span><span class='line'>title: <span class="s2">&quot;your title&quot;</span>
+</span><span class='line'>date: 2012-03-24 5:59
+</span><span class='line'>comments: <span class="nb">true</span>
+</span><span class='line'>categories:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>你可以很方便的修改这些属性，比如multiple categories。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>categories: octopress <span class="c"># one category</span>
+</span><span class='line'>
+</span><span class='line'>categories: <span class="o">[</span>octopress, blog<span class="o">]</span> <span class="c"># multiple catagories example 1</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># multiple catagories example 2</span>
+</span><span class='line'>catagories:
+</span><span class='line'>- octopress
+</span><span class='line'>- blog
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果你不想公开发布一篇post，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>published: <span class="nb">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>就可以了。</p>
+
+<h3>New pages</h3>
+
+<p>添加一个新页面也是很简单的，这里我们来添加一个<code>about</code>页面好了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake new_page<span class="o">[</span>about<span class="o">]</span>
+</span><span class='line'><span class="c"># creates /source/about/index.markdown</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通过<code>root_url/about</code>就可以访问到这个页面了，下一步我们把他添加到导航栏。</p>
+
+<figure class='code'><figcaption><span>source/_includes/custom/navigation.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;main-navigation&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>Blog<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/blog/archives&quot;</span><span class="nt">&gt;</span>Archives<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/about&quot;</span><span class="nt">&gt;</span>About<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>刷新下，<code>about</code>页面是不是出来了？</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake generate
+</span><span class='line'>rake push
+</span><span class='line'>git push origin <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h2>最后</h2>
+
+<p>总体而言，Octopress搭建、部署、配置和写blog都是十分的方便简单，一个字“爽”！</p>
+
+<h3>参考</h3>
+
+<ul>
+<li><a href="http://octopress.org/">Octopress官网</a></li>
+<li><a href="http://daringfireball.net/projects/markdown/">markdown（英文）</a></li>
+<li><a href="http://markdown.tw/">markdown（中文）</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/03/22/hello-octopress/">Hello Octopress!</a></h1>
     
     
@@ -137,12 +366,16 @@
     <iframe width="100%" height="90" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=90&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1699057621&verifier=0d5c1e74&colors=d6f3f7,f2f2f2,666666,0082cb,ecfbfd&dpc=1"></iframe>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (3)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (1)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (4)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
 </section>
 <script type="text/javascript" src="http://www.douban.com/service/badge/2076835/?show=collection&amp;n=6&amp;columns=3&amp;hidelogo=yes&amp;cat=book" ></script>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/05/a-gem-a-day-pry/">一日一Gem - Pry</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-four/">环骑青海湖 - Day 4</a>
@@ -158,10 +391,6 @@
     
       <li class="post">
         <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-one/">环骑青海湖 - Day 1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/09/my-vim/">我的vim</a>
       </li>
     
   </ul>

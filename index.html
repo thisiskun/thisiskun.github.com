@@ -9,8 +9,8 @@
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="Day 4 失眠 逆风 上坡 寒冷 昨天小冯车子爆胎而且受伤，姑娘们决定搭车回西海镇。 我昨晚根本没睡好，今天起床感觉非常糟糕，但我此行的目标就是环湖，
-只能硬着头皮上了。 简单的吃了早餐，我们出发了。 如果说前三天的过程是游玩，那么最后一天的过程可真是没有一点玩的意味在里面。 天气多云寒冷， &hellip;">
+  <meta name="description" content="本文主要介绍 Pry 的使用。 什么是 Pry Pry 是一个功能非常强大的工具，目前简单的理解为一个增强版的 irb 和强大的 debug
+工具。 在了解 Pry 之前，先了解下什么是 REPL。 REPL 是 read-eval-print loop，是一种交互式的编程环境，可以用简单的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,175 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/05/a-gem-a-day-pry/">一日一Gem - Pry</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-05T00:53:00+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/09/05/a-gem-a-day-pry/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文主要介绍 Pry 的使用。</p>
+
+<h2>什么是 Pry</h2>
+
+<p>Pry 是一个功能非常强大的工具，目前简单的理解为一个增强版的 irb 和强大的 debug
+工具。</p>
+
+<p>在了解 Pry 之前，先了解下什么是 REPL。</p>
+
+<p>REPL 是 read-eval-print loop，是一种交互式的编程环境，可以用简单的 ruby
+代码表示：</p>
+
+<figure class='code'><figcaption><span>test.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">loop</span> <span class="p">{</span> <span class="nb">p</span> <span class="nb">eval</span> <span class="nb">gets</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行这个文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">1 + 1</span>
+</span><span class='line'><span class="go">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">puts &quot;hello&quot;</span>
+</span><span class='line'><span class="go">&quot;hello&quot;</span>
+</span><span class='line'><span class="go">nil</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到，使用 REPL 非常的简单优雅，可以马上看到执行结果以及返回值，
+REPL 对于学习一门新的语言来说是非常直观的。</p>
+
+<h2>安装以及配置</h2>
+
+<p>安装 pry：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install pry pry-doc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>跟 irb 以及其他 *nix 软件一样，你可以使用 rc 文件配置： <code>~/.pryc</code> 。</p>
+
+<h2>功能介绍</h2>
+
+<p>打开一个终端，输入 <code>pry</code>，就开始了。</p>
+
+<p>输入 <code>help</code> 可以查看可用的命令了，如果要获取某个命令的详细帮助，可以在后面加
+<code>-h</code> 选项。</p>
+
+<p>主要的命令有：</p>
+
+<ul>
+<li><p><strong>cd</strong></p>
+
+<p>改变当前上下文，既是改变 <code>self</code> 对象。
+打开一个 <code>pry</code>，实际上我现在是在 <code>main</code> 对象上，在 pry 的 prompt
+上也可以看到当前 <code>self</code>。
+<code>cd Array</code> 之后，<code>self</code> 就变为 <code>Array</code> 了。</p></li>
+<li><p><strong>ls</strong></p>
+
+<p>列出 <code>self</code> 的方法，实例变量，本地变量等。
+如果不指定对象就列出 <code>self</code> 的。</p></li>
+<li><p><strong>show-doc</strong></p>
+
+<p>显示注释文档。</p></li>
+<li><p><strong>show-method</strong></p>
+
+<p>显示代码。</p></li>
+<li><p><strong>edit-method</strong></p>
+
+<p>打开编辑器，编辑指定的方法。
+可以直接修改在 <code>pry</code> 中定义的方法，免去重复录入的烦恼，
+或者在 debug 的过程中直接修改方法，方便调试。</p></li>
+<li><p><strong>.shell-command</strong></p>
+
+<p>在 pry 中直接执行 shell command</p></li>
+<li><p><strong>debug</strong></p>
+
+<p>在需要处加入 <code>binding.pry</code> 即可设置断点，可以用 pry-debugger 这个 gem
+来增强。</p></li>
+</ul>
+
+
+<p>当然这里只是列出了一些比较常用的功能，
+pry 最让我欣喜的一点就是通过 <code>cd</code> <code>ls</code> 这两个命令，
+可以很好的了解 ruby 的对象模型，
+对 ruby 元编程的学习也很有好处。</p>
+
+<h2>结合 rails 使用</h2>
+
+<h3>rails console</h3>
+
+<p>既然 pry 这么好用，那么当然子 rails 中也要使用它咯。</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;pry-rails&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打开 rails console，就可以在 rails 下用 pry 了。</p>
+
+<h3>debug</h3>
+
+<p>断点处加上 <code>binding.pry</code>，<code>rails s</code> 启动服务，通过浏览器访问，
+这时程序会在断点处停住，debug 完了后 <code>exit-all</code> 即可继续执行。</p>
+
+<hr />
+
+<h2>小结</h2>
+
+<p>pry 目前已经衍生出了很多的增强项目，如 pry-debugger，pry-remote 等等，
+有时间再补充吧。</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><p><a href="http://pryrepl.org">官网</a></p></li>
+<li><p><a href="https://github.com/pry/pry">pry gitub</a></p></li>
+<li><p><a href="http://railscasts.com/episodes/280-pry-with-rails">railscasts</a></p></li>
+<li><p><a href="http://blog.xdite.net/posts/2012/08/12/pry-the-new-debugger/">xdite的blog</a></p></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1278,233 +1447,6 @@ rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/24/how-to-build-a-blog-with-octopress/">如何使用Octopress搭建blog</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-24T17:44:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/03/24/how-to-build-a-blog-with-octopress/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://octopress.org/">Octopress</a>是一个静态的blog系统，
-虽然副标题是“A blogging framework for hackers”，
-其实只要稍微折腾下，搭建一个blog还是分分钟的事。
-以下记录我是如何搭建这个blog的。</p>
-
-<h2>准备工作</h2>
-
-<ul>
-<li>安装<a href="http://www.ruby-lang.org/en/">ruby</a>，Octopress需要的是1.9.2版本，
-在ubuntu下使用<a href="http://beginrescueend.com/">rvm</a>安装ruby是不二选择，可以方便的管理ruby以及rails的版本。</li>
-<li>安装<a href="http://git-scm.com/">git</a>，在此不多描述。</li>
-<li>一个<a href="http://github.com">Github</a>帐号，我是部署在github pages上的。
-什么！你还没有Github帐号？赶紧去注册个吧～～</li>
-</ul>
-
-
-<h2>安装Octopress</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git://github.com/imathis/octopress.git my_blog
-</span><span class='line'><span class="nb">cd </span>my_blog
-</span><span class='line'>gem install bundler
-</span><span class='line'>bundle install
-</span><span class='line'>rake install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>基本配置</h2>
-
-<p>配置主要看<code>_config.yml</code>文件，一些基本的选项，注释里写得清晰易懂。
-最sexy的一点就是第三方插件了。
-Octopress是个静态的blog系统，使用<a href="http://thisiskun.disqus.com/">Disqus Comments</a>可以很方便的加入评论功能，
-缺点是使用了javasctipt，对搜索引擎不太友好。
-使用<a href="http://www.google.com/analytics/">Google Analytics</a>可以很方便的进行统计分析。</p>
-
-<h2>部署到Github Pages</h2>
-
-<p>假设你的Github帐号是foobar，那么新建一个repository，
-name填<code>foobar.github.com</code>。</p>
-
-<p>然后生成并部署。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake setup_github_pages
-</span><span class='line'>rake generate
-</span><span class='line'>rake deploy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>rake deploy</code>的时候会询问你repository url，
-填入<code>git@github.com:foobar/foobar.github.com.git</code> 即可。</p>
-
-<p>最后不要忘记提交到Github上。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
-</span><span class='line'>git commit -m <span class="s2">&quot;your message&quot;</span>
-</span><span class='line'>git push origin <span class="nb">source</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>现在访问<code>http://foobar.github.com</code>看看,是不是有了。</p>
-
-<p>这里说下原来搞得我比较迷惑的地方。部署完毕后，
-本地会有两个git branch，master跟source，
-我们只需要提交source分支即可，master分支我想是本地备份之用。
-另外提交到Github的master分支，是本地source下_deploy目录的master分支，
-说起来可能比较绕口，
-不过看看<code>Rakefile</code>应该会比较明白的。</p>
-
-<p>当然Octopress也可以很方便的部署到gh-pages或者<a href="http://www.heroku.com/">heroku</a>，<a href="http://octopress.org/">官网</a>上都有详细的说明。</p>
-
-<h2>Blogging basic</h2>
-
-<p>Octopress会为你的blog生成<code>/atom.xml</code>或者
-<code>/blog/catagories/&lt;category&gt;/atom.xml</code>。</p>
-
-<h3>Blog posts</h3>
-
-<p>Octopress默认是使用markdown语法，simple and easy。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake new_post<span class="o">[</span><span class="s1">&#39;your title&#39;</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样就生成一篇新的post在你的<code>source/_post</code>目录下。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>layout: post
-</span><span class='line'>title: <span class="s2">&quot;your title&quot;</span>
-</span><span class='line'>date: 2012-03-24 5:59
-</span><span class='line'>comments: <span class="nb">true</span>
-</span><span class='line'>categories:
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>你可以很方便的修改这些属性，比如multiple categories。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>categories: octopress <span class="c"># one category</span>
-</span><span class='line'>
-</span><span class='line'>categories: <span class="o">[</span>octopress, blog<span class="o">]</span> <span class="c"># multiple catagories example 1</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># multiple catagories example 2</span>
-</span><span class='line'>catagories:
-</span><span class='line'>- octopress
-</span><span class='line'>- blog
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果你不想公开发布一篇post，</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>published: <span class="nb">false</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>就可以了。</p>
-
-<h3>New pages</h3>
-
-<p>添加一个新页面也是很简单的，这里我们来添加一个<code>about</code>页面好了。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake new_page<span class="o">[</span>about<span class="o">]</span>
-</span><span class='line'><span class="c"># creates /source/about/index.markdown</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>通过<code>root_url/about</code>就可以访问到这个页面了，下一步我们把他添加到导航栏。</p>
-
-<figure class='code'><figcaption><span>source/_includes/custom/navigation.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;main-navigation&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>Blog<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/blog/archives&quot;</span><span class="nt">&gt;</span>Archives<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/about&quot;</span><span class="nt">&gt;</span>About<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>刷新下，<code>about</code>页面是不是出来了？</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake generate
-</span><span class='line'>rake push
-</span><span class='line'>git push origin <span class="nb">source</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<hr />
-
-<h2>最后</h2>
-
-<p>总体而言，Octopress搭建、部署、配置和写blog都是十分的方便简单，一个字“爽”！</p>
-
-<h3>参考</h3>
-
-<ul>
-<li><a href="http://octopress.org/">Octopress官网</a></li>
-<li><a href="http://daringfireball.net/projects/markdown/">markdown（英文）</a></li>
-<li><a href="http://markdown.tw/">markdown（中文）</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1518,12 +1460,16 @@ name填<code>foobar.github.com</code>。</p>
     <iframe width="100%" height="90" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=90&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1699057621&verifier=0d5c1e74&colors=d6f3f7,f2f2f2,666666,0082cb,ecfbfd&dpc=1"></iframe>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (3)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (1)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (4)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
 </section>
 <script type="text/javascript" src="http://www.douban.com/service/badge/2076835/?show=collection&amp;n=6&amp;columns=3&amp;hidelogo=yes&amp;cat=book" ></script>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/05/a-gem-a-day-pry/">一日一Gem - Pry</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-four/">环骑青海湖 - Day 4</a>
@@ -1539,10 +1485,6 @@ name填<code>foobar.github.com</code>。</p>
     
       <li class="post">
         <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-one/">环骑青海湖 - Day 1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/09/my-vim/">我的vim</a>
       </li>
     
   </ul>

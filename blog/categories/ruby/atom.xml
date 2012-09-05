@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-09-04T21:46:03+08:00</updated>
+  <updated>2012-09-05T13:53:12+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,135 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[一日一Gem - Pry]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/09/05/a-gem-a-day-pry/"/>
+    <updated>2012-09-05T00:53:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/09/05/a-gem-a-day-pry</id>
+    <content type="html"><![CDATA[<p>本文主要介绍 Pry 的使用。</p>
+
+<h2>什么是 Pry</h2>
+
+<p>Pry 是一个功能非常强大的工具，目前简单的理解为一个增强版的 irb 和强大的 debug
+工具。</p>
+
+<p>在了解 Pry 之前，先了解下什么是 REPL。</p>
+
+<p>REPL 是 read-eval-print loop，是一种交互式的编程环境，可以用简单的 ruby
+代码表示：</p>
+
+<p><code>ruby test.rb
+loop { p eval gets }
+</code></p>
+
+<p>执行这个文件：</p>
+
+<p>```irb
+1 + 1
+2</p>
+
+<p>puts "hello"
+"hello"
+nil
+```</p>
+
+<p>可以看到，使用 REPL 非常的简单优雅，可以马上看到执行结果以及返回值，
+REPL 对于学习一门新的语言来说是非常直观的。</p>
+
+<h2>安装以及配置</h2>
+
+<p>安装 pry：</p>
+
+<p><code>bash
+gem install pry pry-doc
+</code></p>
+
+<p>跟 irb 以及其他 *nix 软件一样，你可以使用 rc 文件配置： <code>~/.pryc</code> 。</p>
+
+<h2>功能介绍</h2>
+
+<p>打开一个终端，输入 <code>pry</code>，就开始了。</p>
+
+<p>输入 <code>help</code> 可以查看可用的命令了，如果要获取某个命令的详细帮助，可以在后面加
+<code>-h</code> 选项。</p>
+
+<p>主要的命令有：</p>
+
+<ul>
+<li><p><strong>cd</strong></p>
+
+<p>改变当前上下文，既是改变 <code>self</code> 对象。
+打开一个 <code>pry</code>，实际上我现在是在 <code>main</code> 对象上，在 pry 的 prompt
+上也可以看到当前 <code>self</code>。
+<code>cd Array</code> 之后，<code>self</code> 就变为 <code>Array</code> 了。</p></li>
+<li><p><strong>ls</strong></p>
+
+<p>列出 <code>self</code> 的方法，实例变量，本地变量等。
+如果不指定对象就列出 <code>self</code> 的。</p></li>
+<li><p><strong>show-doc</strong></p>
+
+<p>显示注释文档。</p></li>
+<li><p><strong>show-method</strong></p>
+
+<p>显示代码。</p></li>
+<li><p><strong>edit-method</strong></p>
+
+<p>打开编辑器，编辑指定的方法。
+可以直接修改在 <code>pry</code> 中定义的方法，免去重复录入的烦恼，
+或者在 debug 的过程中直接修改方法，方便调试。</p></li>
+<li><p><strong>.shell-command</strong></p>
+
+<p>在 pry 中直接执行 shell command</p></li>
+<li><p><strong>debug</strong></p>
+
+<p>在需要处加入 <code>binding.pry</code> 即可设置断点，可以用 pry-debugger 这个 gem
+来增强。</p></li>
+</ul>
+
+
+<p>当然这里只是列出了一些比较常用的功能，
+pry 最让我欣喜的一点就是通过 <code>cd</code> <code>ls</code> 这两个命令，
+可以很好的了解 ruby 的对象模型，
+对 ruby 元编程的学习也很有好处。</p>
+
+<h2>结合 rails 使用</h2>
+
+<h3>rails console</h3>
+
+<p>既然 pry 这么好用，那么当然子 rails 中也要使用它咯。</p>
+
+<p><code>ruby Gemfile
+group :development do
+  gem 'pry-rails'
+end
+</code></p>
+
+<p>打开 rails console，就可以在 rails 下用 pry 了。</p>
+
+<h3>debug</h3>
+
+<p>断点处加上 <code>binding.pry</code>，<code>rails s</code> 启动服务，通过浏览器访问，
+这时程序会在断点处停住，debug 完了后 <code>exit-all</code> 即可继续执行。</p>
+
+<hr />
+
+<h2>小结</h2>
+
+<p>pry 目前已经衍生出了很多的增强项目，如 pry-debugger，pry-remote 等等，
+有时间再补充吧。</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><p><a href="http://pryrepl.org">官网</a></p></li>
+<li><p><a href="https://github.com/pry/pry">pry gitub</a></p></li>
+<li><p><a href="http://railscasts.com/episodes/280-pry-with-rails">railscasts</a></p></li>
+<li><p><a href="http://blog.xdite.net/posts/2012/08/12/pry-the-new-debugger/">xdite的blog</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby Gems]]></title>
