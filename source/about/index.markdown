@@ -7,6 +7,4 @@ sharing: true
 footer: true
 ---
 
-This is Kun.
-
-这里是一个我记录与分享的地方。
+记录与分享
