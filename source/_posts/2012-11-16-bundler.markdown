@@ -1,0 +1,124 @@
+---
+layout: post
+title: "一日一Gem - bundler"
+date: 2012-11-16 15:20
+comments: true
+categories: [gem, ruby]
+---
+
+什么是 Bundlder
+------------------
+
+Bundler 是一个解决 ruby 程序间依赖性的工具。
+
+Bundler 命令行
+-----------------
+
+Bundler 命令行有是 `bundle` 这个工具，用法有：
+
+```bash
+check      -- Determine whether the requirements for your application are installed
+config     -- Specify and read configuration options for bundler
+console    -- Start an IRB session in the context of the current bundle
+exec       -- Execute a script in the context of the current bundle
+# 非常有用的命令，比如系统装了不同版本的 rake 而要要 Gemfile 中指定的版本执行时
+gem        -- Create a simple gem, suitable for development with bundler
+# 前文有提到过的用 Bundler 建 Gem 包
+help       -- Describe available tasks or one specific task
+init       -- Generate a simple Gemfile, placed in the current directory
+# init Gemfile
+install    -- Install the gems specified by the Gemfile or Gemfile.lock
+list       -- Show all of the gems in the current bundle
+open       -- Open an installed gem in the editor
+# 编辑器里打开 Gem，可以在 rc file 里指定 export EDIROT=vim
+package    -- Package the .gem files required by your application
+# 打包 Gem 到 vendor/cache，部署到 produciton 时很有用
+show       -- Show the source location of a particular gem in the bundle
+# 显示 Gem 路径，可以 cd `bundle show gem`
+update     -- Update dependencies to their latest versions
+viz        -- Generate a visual representation of your dependencies
+```
+
+### bundle install vs bundle update
+
+`bundle install` 或者简短命令 `bundle` 安装 Gem，加上
+`--local` 可以在使用 本地 Gem 或 `vendor/cache` 中的 Gem。
+
+bundle update 会把 Gem 升级到符合 `Gemfile`
+约束的最新版，直接下达这个命令的话不利于排错，
+一般用 `bundle update xxx`。
+
+`bundle install` 安装的 Gem 版本是在 `Gemfile.lock` 中指定的，
+
+`bundle update` 则会忽略 `Gemfile.lock`。
+
+Gemfile
+-------
+
++ source
+
+``` ruby
+source 'http://ruby.taobao.org/' 
+# 源设置，天朝用这个快点
+```
+
++ gem
+
+``` ruby
+gem "nokogiri"
+gem "rails", "3.0.0.beta3"
+gem "rack",  ">=1.0"
+gem "thin",  "~>1.1"
+```
+
+> Most of the version specifiers, like `>= 1.0`, are self-explanatory. The
+> specifier `~>` has a special meaning, best shown by example. `~> 2.0.3` is
+> identical to `>= 2.0.3` and `< 2.1`. `~> 2.1` is identical to `>= 2.1` and
+> `<3.0`. `~> 2.2.beta` will match prerelease versions like `2.2.beta.12`. 
+
++ :require
+
+``` ruby
+gem "rspec", :require => "spec"
+```
+
+当文件名跟包名不同时使用。
+
++ :git :branch :ref
+
+指定 Gem 源。
+
++ :path
+
+指定 Gem 路径。
+
++ group
+
+``` ruby
+gem "wirble", :group => :development
+gem "ruby-debug", :group => [:development, :test]
+
+group :test do
+  gem "rspec"
+end
+```
+
+``` bash
+bundle install --without test development
+```
+
+指定要忽略安装的 `group`，Bundler 会在 `.bundle/config` 中记住这个选项。
+
+
+Gemfile.lock
+------------
+
+`Gemfile.lock` 中描述了实际使用了哪个版本的软件包，如果别人 clone 了你的项目，
+那么他 `bundle install` 的时候就是按照 这个文件来的。
+
+---------------------------------------
+
+参考：
+-----
+
++ [Bundler](http://gembundler.com/)
