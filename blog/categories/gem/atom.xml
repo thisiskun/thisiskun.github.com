@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gem | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/gem/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-11-16T15:18:36+08:00</updated>
+  <updated>2012-11-16T17:20:47+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,159 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[一日一Gem - bundler]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/11/16/bundler/"/>
+    <updated>2012-11-16T15:20:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/11/16/bundler</id>
+    <content type="html"><![CDATA[<h2>什么是 Bundlder</h2>
+
+<p>Bundler 是一个解决 ruby 程序间依赖性的工具。</p>
+
+<h2>Bundler 命令行</h2>
+
+<p>Bundler 命令行有是 <code>bundle</code> 这个工具，用法有：</p>
+
+<p>```bash
+check      -- Determine whether the requirements for your application are installed
+config     -- Specify and read configuration options for bundler
+console    -- Start an IRB session in the context of the current bundle
+exec       -- Execute a script in the context of the current bundle</p>
+
+<h1>非常有用的命令，比如系统装了不同版本的 rake 而要要 Gemfile 中指定的版本执行时</h1>
+
+<p>gem        -- Create a simple gem, suitable for development with bundler</p>
+
+<h1>前文有提到过的用 Bundler 建 Gem 包</h1>
+
+<p>help       -- Describe available tasks or one specific task
+init       -- Generate a simple Gemfile, placed in the current directory</p>
+
+<h1>init Gemfile</h1>
+
+<p>install    -- Install the gems specified by the Gemfile or Gemfile.lock
+list       -- Show all of the gems in the current bundle
+open       -- Open an installed gem in the editor</p>
+
+<h1>编辑器里打开 Gem，可以在 rc file 里指定 export EDIROT=vim</h1>
+
+<p>package    -- Package the .gem files required by your application</p>
+
+<h1>打包 Gem 到 vendor/cache，部署到 produciton 时很有用</h1>
+
+<p>show       -- Show the source location of a particular gem in the bundle</p>
+
+<h1>显示 Gem 路径，可以 cd <code>bundle show gem</code></h1>
+
+<p>update     -- Update dependencies to their latest versions
+viz        -- Generate a visual representation of your dependencies
+```</p>
+
+<h3>bundle install vs bundle update</h3>
+
+<p><code>bundle install</code> 或者简短命令 <code>bundle</code> 安装 Gem，加上
+<code>--local</code> 可以在使用 本地 Gem 或 <code>vendor/cache</code> 中的 Gem。</p>
+
+<p>bundle update 会把 Gem 升级到符合 <code>Gemfile</code>
+约束的最新版，直接下达这个命令的话不利于排错，
+一般用 <code>bundle update xxx</code>。</p>
+
+<p><code>bundle install</code> 安装的 Gem 版本是在 <code>Gemfile.lock</code> 中指定的，</p>
+
+<p><code>bundle update</code> 则会忽略 <code>Gemfile.lock</code>。</p>
+
+<h2>Gemfile</h2>
+
+<ul>
+<li>source</li>
+</ul>
+
+
+<p>``` ruby
+source 'http://ruby.taobao.org/'</p>
+
+<h1>源设置，天朝用这个快点</h1>
+
+<p>```</p>
+
+<ul>
+<li>gem</li>
+</ul>
+
+
+<p><code>ruby
+gem "nokogiri"
+gem "rails", "3.0.0.beta3"
+gem "rack",  "&gt;=1.0"
+gem "thin",  "~&gt;1.1"
+</code></p>
+
+<blockquote><p>Most of the version specifiers, like <code>&gt;= 1.0</code>, are self-explanatory. The
+specifier <code>~&gt;</code> has a special meaning, best shown by example. <code>~&gt; 2.0.3</code> is
+identical to <code>&gt;= 2.0.3</code> and <code>&lt; 2.1</code>. <code>~&gt; 2.1</code> is identical to <code>&gt;= 2.1</code> and
+<code>&lt;3.0</code>. <code>~&gt; 2.2.beta</code> will match prerelease versions like <code>2.2.beta.12</code>.</p></blockquote>
+
+<ul>
+<li>:require</li>
+</ul>
+
+
+<p><code>ruby
+gem "rspec", :require =&gt; "spec"
+</code></p>
+
+<p>当文件名跟包名不同时使用。</p>
+
+<ul>
+<li>:git :branch :ref</li>
+</ul>
+
+
+<p>指定 Gem 源。</p>
+
+<ul>
+<li>:path</li>
+</ul>
+
+
+<p>指定 Gem 路径。</p>
+
+<ul>
+<li>group</li>
+</ul>
+
+
+<p>``` ruby
+gem "wirble", :group => :development
+gem "ruby-debug", :group => [:development, :test]</p>
+
+<p>group :test do
+  gem "rspec"
+end
+```</p>
+
+<p><code>bash
+bundle install --without test development
+</code></p>
+
+<p>指定要忽略安装的 <code>group</code>，Bundler 会在 <code>.bundle/config</code> 中记住这个选项。</p>
+
+<h2>Gemfile.lock</h2>
+
+<p><code>Gemfile.lock</code> 中描述了实际使用了哪个版本的软件包，如果别人 clone 了你的项目，
+那么他 <code>bundle install</code> 的时候就是按照 这个文件来的。</p>
+
+<hr />
+
+<h2>参考：</h2>
+
+<ul>
+<li><a href="http://gembundler.com/">Bundler</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[一日一Gem - Pry]]></title>

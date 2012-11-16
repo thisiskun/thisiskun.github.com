@@ -9,8 +9,27 @@
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="本文主要介绍 Pry 的使用。 什么是 Pry Pry 是一个功能非常强大的工具，目前简单的理解为一个增强版的 irb 和强大的 debug
-工具。 在了解 Pry 之前，先了解下什么是 REPL。 REPL 是 read-eval-print loop，是一种交互式的编程环境，可以用简单的 &hellip;">
+  <meta name="description" content="什么是 Bundlder Bundler 是一个解决 ruby 程序间依赖性的工具。 Bundler 命令行 Bundler 命令行有是 bundle 这个工具，用法有： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+check -- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,6 +106,212 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/11/16/bundler/">一日一Gem - Bundler</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-16T15:20:00+08:00" pubdate data-updated="true">Nov 16<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/11/16/bundler/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>什么是 Bundlder</h2>
+
+<p>Bundler 是一个解决 ruby 程序间依赖性的工具。</p>
+
+<h2>Bundler 命令行</h2>
+
+<p>Bundler 命令行有是 <code>bundle</code> 这个工具，用法有：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>check      -- Determine whether the requirements <span class="k">for </span>your application are installed
+</span><span class='line'>config     -- Specify and <span class="nb">read </span>configuration options <span class="k">for </span>bundler
+</span><span class='line'>console    -- Start an IRB session in the context of the current bundle
+</span><span class='line'><span class="nb">exec</span>       -- Execute a script in the context of the current bundle
+</span><span class='line'><span class="c"># 非常有用的命令，比如系统装了不同版本的 rake 而要要 Gemfile 中指定的版本执行时</span>
+</span><span class='line'>gem        -- Create a simple gem, suitable <span class="k">for </span>development with bundler
+</span><span class='line'><span class="c"># 前文有提到过的用 Bundler 建 Gem 包</span>
+</span><span class='line'><span class="nb">help</span>       -- Describe available tasks or one specific task
+</span><span class='line'>init       -- Generate a simple Gemfile, placed in the current directory
+</span><span class='line'><span class="c"># init Gemfile</span>
+</span><span class='line'>install    -- Install the gems specified by the Gemfile or Gemfile.lock
+</span><span class='line'>list       -- Show all of the gems in the current bundle
+</span><span class='line'>open       -- Open an installed gem in the editor
+</span><span class='line'><span class="c"># 编辑器里打开 Gem，可以在 rc file 里指定 export EDIROT=vim</span>
+</span><span class='line'>package    -- Package the .gem files required by your application
+</span><span class='line'><span class="c"># 打包 Gem 到 vendor/cache，部署到 produciton 时很有用</span>
+</span><span class='line'>show       -- Show the <span class="nb">source </span>location of a particular gem in the bundle
+</span><span class='line'><span class="c"># 显示 Gem 路径，可以 cd `bundle show gem`</span>
+</span><span class='line'>update     -- Update dependencies to their latest versions
+</span><span class='line'>viz        -- Generate a visual representation of your dependencies
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>bundle install vs bundle update</h3>
+
+<p><code>bundle install</code> 或者简短命令 <code>bundle</code> 安装 Gem，加上
+<code>--local</code> 可以在使用 本地 Gem 或 <code>vendor/cache</code> 中的 Gem。</p>
+
+<p>bundle update 会把 Gem 升级到符合 <code>Gemfile</code>
+约束的最新版，直接下达这个命令的话不利于排错，
+一般用 <code>bundle update xxx</code>。</p>
+
+<p><code>bundle install</code> 安装的 Gem 版本是在 <code>Gemfile.lock</code> 中指定的，</p>
+
+<p><code>bundle update</code> 则会忽略 <code>Gemfile.lock</code>。</p>
+
+<h2>Gemfile</h2>
+
+<ul>
+<li>source</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s1">&#39;http://ruby.taobao.org/&#39;</span>
+</span><span class='line'><span class="c1"># 源设置，天朝用这个快点</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>gem</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s2">&quot;nokogiri&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;rails&quot;</span><span class="p">,</span> <span class="s2">&quot;3.0.0.beta3&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;rack&quot;</span><span class="p">,</span>  <span class="s2">&quot;&gt;=1.0&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;thin&quot;</span><span class="p">,</span>  <span class="s2">&quot;~&gt;1.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>Most of the version specifiers, like <code>&gt;= 1.0</code>, are self-explanatory. The
+specifier <code>~&gt;</code> has a special meaning, best shown by example. <code>~&gt; 2.0.3</code> is
+identical to <code>&gt;= 2.0.3</code> and <code>&lt; 2.1</code>. <code>~&gt; 2.1</code> is identical to <code>&gt;= 2.1</code> and
+<code>&lt;3.0</code>. <code>~&gt; 2.2.beta</code> will match prerelease versions like <code>2.2.beta.12</code>.</p></blockquote>
+
+<ul>
+<li>:require</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s2">&quot;rspec&quot;</span><span class="p">,</span> <span class="ss">:require</span> <span class="o">=&gt;</span> <span class="s2">&quot;spec&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当文件名跟包名不同时使用。</p>
+
+<ul>
+<li>:git :branch :ref</li>
+</ul>
+
+
+<p>指定 Gem 源。</p>
+
+<ul>
+<li>:path</li>
+</ul>
+
+
+<p>指定 Gem 路径。</p>
+
+<ul>
+<li>group</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s2">&quot;wirble&quot;</span><span class="p">,</span> <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="ss">:development</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;ruby-debug&quot;</span><span class="p">,</span> <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s2">&quot;rspec&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle install --without <span class="nb">test </span>development
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定要忽略安装的 <code>group</code>，Bundler 会在 <code>.bundle/config</code> 中记住这个选项。</p>
+
+<h2>Gemfile.lock</h2>
+
+<p><code>Gemfile.lock</code> 中描述了实际使用了哪个版本的软件包，如果别人 clone 了你的项目，
+那么他 <code>bundle install</code> 的时候就是按照 这个文件来的。</p>
+
+<hr />
+
+<h2>参考：</h2>
+
+<ul>
+<li><a href="http://gembundler.com/">Bundler</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1340,141 +1565,6 @@ api key，
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/30/rubys-load-path/">ruby的$LOAD_PATH</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-30T00:22:00+08:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/03/30/rubys-load-path/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在ruby中，当你<code>require</code>一个文件的时候，
-ruby去哪里寻找这个文件呢？
-答案就是<code>$LOAD_PATH</code>了。
-<code>$LOAD_PATH</code>还有另外一种perl风格的别名<code>$:</code>，
-而且貌似这种写法更加常见，
-虽然让人摸不着头脑就是了。</p>
-
-<p>假设在<code>~/test</code>路径下，
-有<code>foo.rb</code>和<code>bar.rb</code>，
-在ruby 1.9.2 之前的版本里，
-执行脚本的目录是加入到<code>$LOAD_PATH</code>里的，
-所以你可以</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bar.rb</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;foo&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ruby 1.9.2 之后的版本里，
-出于安全的考虑，
-不再包含当前目录，
-所以上面的写法会出错，
-所以相应的代码应该改为</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bar.rb</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;./foo&#39;</span>
-</span><span class='line'><span class="c1"># or</span>
-</span><span class='line'><span class="n">require_relative</span> <span class="s1">&#39;foo&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其中<code>require './foo'</code>是当前目录相对文件的路径，
-<code>require_relative</code>的意思是，
-<strong>包含这句代码的文件与目标文件的相对路径</strong>。
-下面是<a href="http://stackoverflow.com/questions/4333286/ruby-require-vs-require-relative-best-practice-to-workaround-running-in-both">stackoverflow</a>上的一段兼容1.9.2之前版本的代码</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">unless</span> <span class="no">Kernel</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:require_relative</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">module</span> <span class="nn">Kernel</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">require_relative</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</span><span class='line'>      <span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">caller</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">),</span> <span class="n">path</span><span class="o">.</span><span class="n">to_str</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<hr />
-
-<p>回到<code>$LOAD_PATH</code>，让我们看看它的值，</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1&quot;</span><span class="p">,</span>
-</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux&quot;</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>下面的方法可以将目录动态加入<code>$LOAD_PATH</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vg">$:</span><span class="o">.</span><span class="n">unshift</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s2">&quot;../lib&quot;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>因为ruby以第一个找到的为准，
-所以用unshift，可以提高些许效率。</p>
-
-<hr />
-
-<p>最后，一点小发现，
-rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1488,12 +1578,16 @@ rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
     <iframe width="100%" height="90" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=90&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1699057621&verifier=0d5c1e74&colors=d6f3f7,f2f2f2,666666,0082cb,ecfbfd&dpc=1"></iframe>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (1)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (4)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (2)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (6)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
 </section>
 <script type="text/javascript" src="http://www.douban.com/service/badge/2076835/?show=collection&amp;n=6&amp;columns=3&amp;hidelogo=yes&amp;cat=book" ></script>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/bundler/">一日一Gem - bundler</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/09/05/a-gem-a-day-pry/">一日一Gem - Pry</a>
@@ -1509,10 +1603,6 @@ rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
     
       <li class="post">
         <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-two/">环骑青海湖 - Day 2</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-one/">环骑青海湖 - Day 1</a>
       </li>
     
   </ul>
