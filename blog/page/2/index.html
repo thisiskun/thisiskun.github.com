@@ -9,13 +9,15 @@
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="在ruby中，当你require一个文件的时候，
-ruby去哪里寻找这个文件呢？
-答案就是$LOAD_PATH了。
-$LOAD_PATH还有另外一种perl风格的别名$:，
-而且貌似这种写法更加常见，
-虽然让人摸不着头脑就是了。 假设在~/test路径下，
-有foo.rb和bar.rb， &hellip;">
+  <meta name="description" content="这里是我对rubygems的学习记录和自己的一些理解。 什么是rubygems gems rubygems是ruby的一个包管理系统，gem是ruby的软件包。 上篇日志讲到了$LOAD_PATH，其实rubygems的实现也是通过$LOAD_PATH的。 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +94,281 @@ $LOAD_PATH还有另外一种perl风格的别名$:，
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/04/06/ruby-gems/">Ruby Gems</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-06T14:54:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/04/06/ruby-gems/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这里是我对rubygems的学习记录和自己的一些理解。</p>
+
+<h2>什么是rubygems gems</h2>
+
+<p><a href="https://rubygems.org/">rubygems</a>是ruby的一个包管理系统，gem是ruby的软件包。</p>
+
+<p>上篇日志讲到了<code>$LOAD_PATH</code>，其实rubygems的实现也是通过<code>$LOAD_PATH</code>的。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">pp</span> <span class="vg">$:</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们来<code>require</code>一个gem</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="nb">require</span> <span class="s1">&#39;rdiscount&#39;</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">004</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">pp</span> <span class="vg">$:</span>
+</span><span class='line'><span class="o">[</span><span class="s2">&quot;/home/kun/.rvm/gems/ruby-1.9.2-p290@rails3.2.1/gems/rdiscount-1.6.8/lib&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby/1.9.1/i686-linux&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/vendor_ruby&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1&quot;</span><span class="p">,</span>
+</span><span class='line'> <span class="s2">&quot;/home/kun/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/i686-linux&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如上，<code>rdiscount</code>这个gem的lib目录已经加入到<code>$LOAD_PATH</code>中了，可以很方便的<code>require</code>了。</p>
+
+<h2>建立自己的gem</h2>
+
+<h3>使用bundler</h3>
+
+<p>这里我用<code>bundler</code>来生成gem结构，其他实现不太清楚。</p>
+
+<p>生成gem结构：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle gem hola
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>目录结构：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>.
+</span><span class='line'>└── hola
+</span><span class='line'>    ├── lib
+</span><span class='line'>    │   ├── hola
+</span><span class='line'>    │   │   └── version.rb
+</span><span class='line'>    │   └── hola.rb
+</span><span class='line'>    ├── Gemfile
+</span><span class='line'>    ├── hola.gemspec
+</span><span class='line'>    ├── LICENSE
+</span><span class='line'>    ├── Rakefile
+</span><span class='line'>    └── README.md
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>bundler</code>生成的gem结构已经很符合gem的约定规范了，
+而且还自动建立个git repo，
+用起来很舒服。</p>
+
+<h3>lib/</h3>
+
+<p>lib目录是我们的代码所在目录，当我们install了这个gem，
+当我们<code>require 'hola'</code>时，就是<code>require</code>了这里的<code>hola.rb</code>，
+所以需要的其他文件，都要在<code>hola.rb</code>里面<code>require</code>进来。</p>
+
+<h3>Gemfile</h3>
+
+<p><code>Gemfile</code>是bundler的配置文件</p>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s1">&#39;https://rubygems.org&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Specify your gem&#39;s dependencies in hola.gemspec</span>
+</span><span class='line'><span class="n">gemspec</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如提示，我们应该把软件包依赖写在<code>hola.gemspec</code>里面。</p>
+
+<h3>hola.gemspec</h3>
+
+<p>gem描述文件</p>
+
+<figure class='code'><figcaption><span>hola.gemspec</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span><span class='line'><span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s1">&#39;../lib/hola/version&#39;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Gem</span><span class="o">::</span><span class="no">Specification</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">gem</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">authors</span>       <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Arthur Chen&quot;</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">email</span>         <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;chenchaokun@gmail.com&quot;</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">description</span>   <span class="o">=</span> <span class="sx">%q{TODO: Write a gem description}</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">summary</span>       <span class="o">=</span> <span class="sx">%q{TODO: Write a gem summary}</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">homepage</span>      <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">files</span>         <span class="o">=</span> <span class="sb">`git ls-files`</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vg">$\</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">executables</span>   <span class="o">=</span> <span class="n">gem</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">%r{^bin/}</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">test_files</span>    <span class="o">=</span> <span class="n">gem</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">%r{^(test|spec|features)/}</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">name</span>          <span class="o">=</span> <span class="s2">&quot;hola&quot;</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">require_paths</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;lib&quot;</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">gem</span><span class="o">.</span><span class="n">version</span>       <span class="o">=</span> <span class="no">Hola</span><span class="o">::</span><span class="no">VERSION</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>具体看<a href="http://guides.rubygems.org/specification-reference/">官方文档</a>就好了。</p>
+
+<h3>Rakefile</h3>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env rake</span>
+</span><span class='line'><span class="nb">require</span> <span class="s2">&quot;bundler/gem_tasks&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># rake -T</span>
+</span><span class='line'>rake build    <span class="c"># Build hola-0.0.1.gem into the pkg directory</span>
+</span><span class='line'>rake install  <span class="c"># Build and install hola-0.0.1.gem into system gems</span>
+</span><span class='line'>rake release  <span class="c"># Create tag v0.0.1 and build and push hola-0.0.1.gem to Rubygems</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三个好用的task。</p>
+
+<h3>添加可执行脚本</h3>
+
+<p>按照惯例，可执行脚本放在<code>bin/</code>目录下，脚本命名一般跟gem一样，
+如<code>bin/hola</code>，
+ruby构建命令行工具比较流行的有<code>rake</code>和<code>thor</code>，
+后续应该有相关的博文。</p>
+
+<h3>test</h3>
+
+<p>unittest或者rspec，相应的测试代码放在<code>test/</code> <code>sepc/</code>下。</p>
+
+<h2>publishing</h2>
+
+<p>先<code>git commit</code>，
+也可以<code>git remote add</code>将项目托管到github。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake install
+</span><span class='line'>rake release
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就可以把你的gem发布到<a href="https://rubygems.org/">rubygems.org</a>上了，
+记得注册。。。
+api key，
+以及检查gem名是否可用。</p>
+
+<h2>最后</h2>
+
+<p>现在你<code>gem list -r your_gem</code>，就可以看到你的gem了，
+全球各地的黑客们就可以很愉快的下载使用你的gem了，
+你为开源世界又贡献了一个helloworld，
+是不是有一股满足感油然而生呢：）。</p>
+
+<p>参考：</p>
+
+<ul>
+<li><a href="http://guides.rubygems.org/" title="rubygems guides">rubygems guides</a></li>
+<li><a href="http://railscasts.com/episodes/245-new-gem-with-bundler" title="railcasts">railscasts: new gem with bundler</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -556,12 +833,16 @@ name填<code>foobar.github.com</code>。</p>
     <iframe width="100%" height="90" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=90&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1699057621&verifier=0d5c1e74&colors=d6f3f7,f2f2f2,666666,0082cb,ecfbfd&dpc=1"></iframe>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (2)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (6)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (2)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (7)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
 </section>
 <script type="text/javascript" src="http://www.douban.com/service/badge/2076835/?show=collection&amp;n=6&amp;columns=3&amp;hidelogo=yes&amp;cat=book" ></script>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/16/rvm/">RVM</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/11/16/bundler/">一日一Gem - bundler</a>
@@ -577,10 +858,6 @@ name填<code>foobar.github.com</code>。</p>
     
       <li class="post">
         <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-three/">环骑青海湖 - Day 3</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-two/">环骑青海湖 - Day 2</a>
       </li>
     
   </ul>

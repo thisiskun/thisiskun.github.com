@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-11-16T17:20:47+08:00</updated>
+  <updated>2012-11-16T21:07:30+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RVM]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/11/16/rvm/"/>
+    <updated>2012-11-16T20:49:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/11/16/rvm</id>
+    <content type="html"><![CDATA[<p>今天看了一下 RVM 的官网，又发现不少有趣的东西。</p>
+
+<h2>gemset</h2>
+
+<p>这里要说的是 <code>global</code> 这个 gemset，安装在这里的 Gem 对每个 gemset
+都是可用的哦。</p>
+
+<p>还有就是 <code>~/.rvm/gemsets/default.gems</code> 和 <code>~/.rvm/gemsets/global.gems</code>
+这两个配置文件，把需要的 Gem 写在里面，以后安装的每个 ruby
+版本都会自动安装上这些 Gem 了。</p>
+
+<h2>rvmrc</h2>
+
+<p>这里指的是 project 的 <code>.rvmrc</code> 文件，在 Octopress 里你就可以发现它的身影了，</p>
+
+<p><code>ruby .rvmrc
+rvm use 1.9.2
+</code></p>
+
+<h2>do</h2>
+
+<p>测试版本兼容性的，有了这个实在太方便了</p>
+
+<p><code>ruby
+∴ rvm [all|all-gemsets|&lt;ruby&gt;,...|&lt;path&gt;] [--verbose|--summary|--yaml|--json] do &lt;command&gt; ...
+∴ rvm in &lt;path&gt; do &lt;some-command&gt; ...
+</code></p>
+
+<p>一个简单的例子</p>
+
+<p><code>ruby test.rb
+h = {name: 'kun'}
+puts h
+</code></p>
+
+<p><code>bash
+rvm all --verbose do ruby test.rb
+</code></p>
+
+<p>``` ruby
+ruby-1.9.2-p320: ruby 1.9.2p320 (2012-04-20 revision 35421) [i686-linux]
+{:name=>"Arthur"}
+ruby-1.9.3-p327: ruby 1.9.3p327 (2012-11-10 revision 37606) [i686-linux]
+{:name=>"Arthur"}
+ruby-1.9.3-p286: ruby 1.9.3p286 (2012-10-12 revision 37165) [i686-linux]
+{:name=>"Arthur"}
+ruby-1.8.7-p371: ruby 1.8.7 (2012-10-12 patchlevel 371) [i686-linux]
+test.rb:4: odd number list for Hash
+h = {name: 'Arthur'}</p>
+
+<pre><code>      ^
+</code></pre>
+
+<p>test.rb:4: syntax error, unexpected ':', expecting '}'
+h = {name: 'Arthur'}</p>
+
+<pre><code>      ^
+</code></pre>
+
+<p>test.rb:4: syntax error, unexpected '}', expecting $end
+```</p>
+
+<p>另外还可以通过 Benchmark 来测试不同版本 ruby 的性能。</p>
+
+<hr />
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="https://rvm.io/">rvm</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[一日一Gem - bundler]]></title>
@@ -573,15 +653,6 @@ $:.unshift File.expand_path("../lib", __FILE__)
 
 <p>最后，一点小发现，
 rspec是会自动加载<code>lib/</code>和<code>spec/</code>的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[a draft]]></title>
-    <link href="http://thisiskun.github.com/blog/2012/03/24/a-draft/"/>
-    <updated>2012-03-24T17:26:00+08:00</updated>
-    <id>http://thisiskun.github.com/blog/2012/03/24/a-draft</id>
-    <content type="html"><![CDATA[<h1>I not gonna publish this post.</h1>
 ]]></content>
   </entry>
   

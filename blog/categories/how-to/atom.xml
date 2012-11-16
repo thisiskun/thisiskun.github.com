@@ -4,7 +4,7 @@
   <title><![CDATA[Category: how-to | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/how-to/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-11-16T17:20:47+08:00</updated>
+  <updated>2012-11-16T21:07:30+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -146,9 +146,9 @@ rake new_page[about]</p>
 <p>``` html source/_includes/custom/navigation.html</p>
 
 <ul class="main-navigation">
-  <li><a href="{{ root_url }}/">Blog</a></li>
-  <li><a href="{{ root_url }}/blog/archives">Archives</a></li>
-  <li><a href="{{ root_url }}/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
 </ul>
 
 

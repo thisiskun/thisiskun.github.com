@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-11-16T17:20:24+08:00</updated>
+  <updated>2012-11-16T21:07:30+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,104 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RVM]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/11/16/rvm/"/>
+    <updated>2012-11-16T20:49:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/11/16/rvm</id>
+    <content type="html"><![CDATA[<p>今天看了一下 RVM 的官网，又发现不少有趣的东西。</p>
+
+<h2>gemset</h2>
+
+<p>这里要说的是 <code>global</code> 这个 gemset，安装在这里的 Gem 对每个 gemset
+都是可用的哦。</p>
+
+<p>还有就是 <code>~/.rvm/gemsets/default.gems</code> 和 <code>~/.rvm/gemsets/global.gems</code>
+这两个配置文件，把需要的 Gem 写在里面，以后安装的每个 ruby
+版本都会自动安装上这些 Gem 了。</p>
+
+<h2>rvmrc</h2>
+
+<p>这里指的是 project 的 <code>.rvmrc</code> 文件，在 Octopress 里你就可以发现它的身影了，</p>
+
+<figure class='code'><figcaption><span>.rvmrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rvm</span> <span class="n">use</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>do</h2>
+
+<p>测试版本兼容性的，有了这个实在太方便了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">∴</span> <span class="n">rvm</span> <span class="o">[</span><span class="n">all</span><span class="o">|</span><span class="n">all</span><span class="o">-</span><span class="n">gemsets</span><span class="o">|&lt;</span><span class="n">ruby</span><span class="o">&gt;</span><span class="p">,</span><span class="o">.</span><span class="n">.</span><span class="o">.|&lt;</span><span class="n">path</span><span class="o">&gt;]</span> <span class="o">[--</span><span class="n">verbose</span><span class="o">|--</span><span class="n">summary</span><span class="o">|--</span><span class="n">yaml</span><span class="o">|--</span><span class="n">json</span><span class="o">]</span> <span class="k">do</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="err">∴</span> <span class="n">rvm</span> <span class="k">in</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span> <span class="k">do</span> <span class="o">&lt;</span><span class="n">some</span><span class="o">-</span><span class="n">command</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一个简单的例子</p>
+
+<figure class='code'><figcaption><span>test.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;kun&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">h</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rvm all --verbose <span class="k">do </span>ruby test.rb
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">p320</span><span class="p">:</span> <span class="n">ruby</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span><span class="n">p320</span> <span class="p">(</span><span class="mi">2012</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">20</span> <span class="n">revision</span> <span class="mi">35421</span><span class="p">)</span> <span class="o">[</span><span class="n">i686</span><span class="o">-</span><span class="n">linux</span><span class="o">]</span>
+</span><span class='line'><span class="p">{</span><span class="ss">:name</span><span class="o">=&gt;</span><span class="s2">&quot;Arthur&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p327</span><span class="p">:</span> <span class="n">ruby</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p327</span> <span class="p">(</span><span class="mi">2012</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">10</span> <span class="n">revision</span> <span class="mi">37606</span><span class="p">)</span> <span class="o">[</span><span class="n">i686</span><span class="o">-</span><span class="n">linux</span><span class="o">]</span>
+</span><span class='line'><span class="p">{</span><span class="ss">:name</span><span class="o">=&gt;</span><span class="s2">&quot;Arthur&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p286</span><span class="p">:</span> <span class="n">ruby</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p286</span> <span class="p">(</span><span class="mi">2012</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">12</span> <span class="n">revision</span> <span class="mi">37165</span><span class="p">)</span> <span class="o">[</span><span class="n">i686</span><span class="o">-</span><span class="n">linux</span><span class="o">]</span>
+</span><span class='line'><span class="p">{</span><span class="ss">:name</span><span class="o">=&gt;</span><span class="s2">&quot;Arthur&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">8</span><span class="o">.</span><span class="mi">7</span><span class="o">-</span><span class="n">p371</span><span class="p">:</span> <span class="n">ruby</span> <span class="mi">1</span><span class="o">.</span><span class="mi">8</span><span class="o">.</span><span class="mi">7</span> <span class="p">(</span><span class="mi">2012</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">12</span> <span class="n">patchlevel</span> <span class="mi">371</span><span class="p">)</span> <span class="o">[</span><span class="n">i686</span><span class="o">-</span><span class="n">linux</span><span class="o">]</span>
+</span><span class='line'><span class="nb">test</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span> <span class="n">odd</span> <span class="n">number</span> <span class="n">list</span> <span class="k">for</span> <span class="no">Hash</span>
+</span><span class='line'><span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Arthur&#39;</span><span class="p">}</span>
+</span><span class='line'>          <span class="o">^</span>
+</span><span class='line'><span class="nb">test</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span> <span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">expecting</span> <span class="s1">&#39;}&#39;</span>
+</span><span class='line'><span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Arthur&#39;</span><span class="p">}</span>
+</span><span class='line'>          <span class="o">^</span>
+</span><span class='line'><span class="nb">test</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span> <span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="n">expecting</span> <span class="vg">$end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>另外还可以通过 Benchmark 来测试不同版本 ruby 的性能。</p>
+
+<hr />
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="https://rvm.io/">rvm</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[一日一Gem - bundler]]></title>
