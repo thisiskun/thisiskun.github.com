@@ -1,0 +1,75 @@
+---
+layout: post
+title: "RVM"
+date: 2012-11-16 20:49
+comments: true
+categories: [ruby]
+---
+
+今天看了一下 RVM 的官网，又发现不少有趣的东西。
+
+gemset
+------
+
+这里要说的是 `global` 这个 gemset，安装在这里的 Gem 对每个 gemset
+都是可用的哦。
+
+还有就是 `~/.rvm/gemsets/default.gems` 和 `~/.rvm/gemsets/global.gems`
+这两个配置文件，把需要的 Gem 写在里面，以后安装的每个 ruby
+版本都会自动安装上这些 Gem 了。
+
+rvmrc
+-----
+
+这里指的是 project 的 `.rvmrc` 文件，在 Octopress 里你就可以发现它的身影了，
+
+``` ruby .rvmrc
+rvm use 1.9.2
+```
+
+do
+--
+
+测试版本兼容性的，有了这个实在太方便了
+
+``` ruby
+∴ rvm [all|all-gemsets|<ruby>,...|<path>] [--verbose|--summary|--yaml|--json] do <command> ...
+∴ rvm in <path> do <some-command> ...
+```
+
+一个简单的例子
+
+``` ruby test.rb
+h = {name: 'kun'}
+puts h
+```
+
+``` bash
+rvm all --verbose do ruby test.rb
+```
+
+``` ruby
+ruby-1.9.2-p320: ruby 1.9.2p320 (2012-04-20 revision 35421) [i686-linux] 
+{:name=>"Arthur"}
+ruby-1.9.3-p327: ruby 1.9.3p327 (2012-11-10 revision 37606) [i686-linux] 
+{:name=>"Arthur"}
+ruby-1.9.3-p286: ruby 1.9.3p286 (2012-10-12 revision 37165) [i686-linux] 
+{:name=>"Arthur"}
+ruby-1.8.7-p371: ruby 1.8.7 (2012-10-12 patchlevel 371) [i686-linux] 
+test.rb:4: odd number list for Hash
+h = {name: 'Arthur'}
+          ^
+test.rb:4: syntax error, unexpected ':', expecting '}'
+h = {name: 'Arthur'}
+          ^
+test.rb:4: syntax error, unexpected '}', expecting $end
+```
+
+另外还可以通过 Benchmark 来测试不同版本 ruby 的性能。
+
+---------------------------------------
+
+参考
+------
+
++ [rvm](https://rvm.io/)
