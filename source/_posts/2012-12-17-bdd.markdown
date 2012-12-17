@@ -1,0 +1,48 @@
+---
+layout: post
+title: "BDD"
+date: 2012-12-17 20:02
+comments: true
+categories: ruby
+---
+
+最近学习测试来着。
+
+### 什么是 BDD
+
+BDD 即为 Behavior Driven Development，是 TDD（Test Driven Development）的一种延伸，
+是一种软件开发的方法论。
+
+实践起来就是在写开发代码之前，先根据需求写好测试用例，
+然后跑用例（必须 fail），然后再开发实际代码跑通测试，
+测试通过之后再重构代码，然后再跑测试。。。
+
+如此的一个迭代过程。
+
+### 为什么我要学 BDD
+
++ 社区开发所推崇，必须了解，有朝一日可能会用上
+
++ 因为 spec 的良好可阅读性，其实也是作为规范文档的存在，可以作为开发的依据
+
++ 面向接口开发，可以写出接口良好的代码
+
+### Cucumber 与 Rspec
+
+目前我的理解是 Cucumber 是针对高层次的测试，如 acceptance test，
+Rspec 更适合做 unittest。
+
+Cucumber 的特点就是写出来的用例就算是非开发人员也可以看懂，
+着重于宏观层面的功能实现，对软件产品会有更好的了解。
+
+Rspec 可以做更加底层的测试，代码不同分层的测试。
+当然 Rspec 也可以做 acceptance test，
+不过这点我更加倾向于用 Cucumber，因为我是一个 ”人“。
+
+### 抛开 BDD，测试的必要性
+
+不管是测试先行，还是上车后补票，测试都是必不可少的：
+
++ specification 之存在，我要写什么样的软件
+
++ 确保没有破坏原有的代码
