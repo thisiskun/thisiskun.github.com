@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-12-09T19:37:13+08:00</updated>
+  <updated>2012-12-17T20:04:01+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[BDD]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/12/17/bdd/"/>
+    <updated>2012-12-17T20:02:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/12/17/bdd</id>
+    <content type="html"><![CDATA[<p>最近学习测试来着。</p>
+
+<h3>什么是 BDD</h3>
+
+<p>BDD 即为 Behavior Driven Development，是 TDD（Test Driven Development）的一种延伸，
+是一种软件开发的方法论。</p>
+
+<p>实践起来就是在写开发代码之前，先根据需求写好测试用例，
+然后跑用例（必须 fail），然后再开发实际代码跑通测试，
+测试通过之后再重构代码，然后再跑测试。。。</p>
+
+<p>如此的一个迭代过程。</p>
+
+<h3>为什么我要学 BDD</h3>
+
+<ul>
+<li><p>社区开发所推崇，必须了解，有朝一日可能会用上</p></li>
+<li><p>因为 spec 的良好可阅读性，其实也是作为规范文档的存在，可以作为开发的依据</p></li>
+<li><p>面向接口开发，可以写出接口良好的代码</p></li>
+</ul>
+
+
+<h3>Cucumber 与 Rspec</h3>
+
+<p>目前我的理解是 Cucumber 是针对高层次的测试，如 acceptance test，
+Rspec 更适合做 unittest。</p>
+
+<p>Cucumber 的特点就是写出来的用例就算是非开发人员也可以看懂，
+着重于宏观层面的功能实现，对软件产品会有更好的了解。</p>
+
+<p>Rspec 可以做更加底层的测试，代码不同分层的测试。
+当然 Rspec 也可以做 acceptance test，
+不过这点我更加倾向于用 Cucumber，因为我是一个 ”人“。</p>
+
+<h3>抛开 BDD，测试的必要性</h3>
+
+<p>不管是测试先行，还是上车后补票，测试都是必不可少的：</p>
+
+<ul>
+<li><p>specification 之存在，我要写什么样的软件</p></li>
+<li><p>确保没有破坏原有的代码</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[RVM]]></title>
