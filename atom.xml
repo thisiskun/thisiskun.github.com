@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-12-17T20:04:01+08:00</updated>
+  <updated>2012-12-24T19:51:52+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[linux keyboard tricks]]></title>
+    <link href="http://thisiskun.github.com/blog/2012/12/24/linux-keyboard-tricks/"/>
+    <updated>2012-12-24T18:24:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2012/12/24/linux-keyboard-tricks</id>
+    <content type="html"><![CDATA[<p>在此记录 linux 命令行的一些实用小技巧，使用的环境是 zsh + oh-my-zsh，
+对 bash 部分不兼容。</p>
+
+<h2>命令行输入</h2>
+
+<h3>移动和编辑</h3>
+
+<ul>
+<li><code>ctrl_a</code> 跳到行首</li>
+<li><code>ctrl_e</code> 跳到行末</li>
+<li><code>ctrl_l</code> 清屏</li>
+<li><code>ctrl_u</code> 清除整行</li>
+<li><code>ctrl_k</code> 光标后内容</li>
+<li><code>ctrl_w</code> 清除光标前一个单词</li>
+<li><code>alt_d</code>  清除光标后一个单词</li>
+<li><code>alt_t</code>  光标前两个单词互换位置</li>
+</ul>
+
+
+<p><strong>实用例子</strong></p>
+
+<p><code>alt_d</code> 相比 <code>ctrl_w</code>
+这个命令用的应该比较少，不过如果一长串命令前面不小心加上了
+<code>sudo</code>，最快的方式就是
+<code>ctrl_a</code> + <code>alt_d</code> 再 enter</p>
+
+<h3>历史相关</h3>
+
+<ul>
+<li><code>!!</code> 上一个命令</li>
+<li><code>!!-n</code> 倒数第n个命令</li>
+<li><code>alt_.</code> 历史命令的最后一个单词</li>
+<li><code>alt_n</code> <code>alt_.</code> 历史命令的倒数第n个单词</li>
+<li><code>!*</code> 上个命令的全部参数</li>
+<li><code>ctrl_p</code> 向前导航历史命令</li>
+<li><code>ctrl_n</code> 向后导航历史命令</li>
+<li><code>ctrl_r</code> 历史命令检索，按下后输入之前命令的片段，动态补全，回车确认，<code>ctrl_c</code>
+取消</li>
+<li><code>foobar key_up</code> 输入 <code>foobar</code> 后按向上键可以搜索 <code>foobar</code> 开头的命令</li>
+<li><code>foobar key_down</code> 同上</li>
+</ul>
+
+
+<p><strong>注意</strong> 截至本文发布时，zsh 要使用 key_up key_down 功能必须在 <code>.zshenv</code>
+中加入：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">DEBIAN_PREVENT_KEYBOARD_CHANGES</span><span class="o">=</span>yes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>实用例子</strong></p>
+
+<p><code>sudo !!</code> 使用时遇到无权限时可快速使用 sudo</p>
+
+<h3>表达式</h3>
+
+<ul>
+<li>花括号表达式</li>
+<li>算数表达式</li>
+<li>命令表达式</li>
+<li>双引号和单引号</li>
+</ul>
+
+
+<p><strong>实用例子</strong></p>
+
+<ul>
+<li>重命名，超好用有没有</li>
+</ul>
+
+
+<p><code>mv afuckinglongpath.{css,scss}</code></p>
+
+<ul>
+<li>跳转命令所在目录</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd</span> <span class="sb">`</span>whick rake<span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>双引号转义，单引号不转义</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;$PATH&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;$PATH&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>导航</h2>
+
+<p><code>cd -</code> 跳转上一个目录</p>
+
+<p><code>d</code> 最近的目录</p>
+
+<p><code>cd +n</code> 跳转上面列出的目录，直接输入 <code>n</code> 也可以</p>
+
+<h2>其他</h2>
+
+<p>多用 alias，你会发现 oh-my-zsh 里面很多插件其实就是 alias。</p>
+
+<p>当然，不要忘了我们的 <code>tab</code>。</p>
+
+<hr />
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://linuxcommand.org">the linux command</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[BDD]]></title>

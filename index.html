@@ -9,9 +9,13 @@
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="最近学习测试来着。 什么是 BDD BDD 即为 Behavior Driven Development，是 TDD（Test Driven Development）的一种延伸，
-是一种软件开发的方法论。 实践起来就是在写开发代码之前，先根据需求写好测试用例，
-然后跑用例（必须 fail）， &hellip;">
+  <meta name="description" content="在此记录 linux 命令行的一些实用小技巧，使用的环境是 zsh + oh-my-zsh，
+对 bash 部分不兼容。 命令行输入 移动和编辑 ctrl_a 跳到行首
+ctrl_e 跳到行末
+ctrl_l 清屏
+ctrl_u 清除整行
+ctrl_k 光标后内容
+ctrl_w 清除光标前一个单词 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,6 +92,163 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/12/24/linux-keyboard-tricks/">Linux Keyboard Tricks</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-24T18:24:00+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/12/24/linux-keyboard-tricks/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在此记录 linux 命令行的一些实用小技巧，使用的环境是 zsh + oh-my-zsh，
+对 bash 部分不兼容。</p>
+
+<h2>命令行输入</h2>
+
+<h3>移动和编辑</h3>
+
+<ul>
+<li><code>ctrl_a</code> 跳到行首</li>
+<li><code>ctrl_e</code> 跳到行末</li>
+<li><code>ctrl_l</code> 清屏</li>
+<li><code>ctrl_u</code> 清除整行</li>
+<li><code>ctrl_k</code> 光标后内容</li>
+<li><code>ctrl_w</code> 清除光标前一个单词</li>
+<li><code>alt_d</code>  清除光标后一个单词</li>
+<li><code>alt_t</code>  光标前两个单词互换位置</li>
+</ul>
+
+
+<p><strong>实用例子</strong></p>
+
+<p><code>alt_d</code> 相比 <code>ctrl_w</code>
+这个命令用的应该比较少，不过如果一长串命令前面不小心加上了
+<code>sudo</code>，最快的方式就是
+<code>ctrl_a</code> + <code>alt_d</code> 再 enter</p>
+
+<h3>历史相关</h3>
+
+<ul>
+<li><code>!!</code> 上一个命令</li>
+<li><code>!!-n</code> 倒数第n个命令</li>
+<li><code>alt_.</code> 历史命令的最后一个单词</li>
+<li><code>alt_n</code> <code>alt_.</code> 历史命令的倒数第n个单词</li>
+<li><code>!*</code> 上个命令的全部参数</li>
+<li><code>ctrl_p</code> 向前导航历史命令</li>
+<li><code>ctrl_n</code> 向后导航历史命令</li>
+<li><code>ctrl_r</code> 历史命令检索，按下后输入之前命令的片段，动态补全，回车确认，<code>ctrl_c</code>
+取消</li>
+<li><code>foobar key_up</code> 输入 <code>foobar</code> 后按向上键可以搜索 <code>foobar</code> 开头的命令</li>
+<li><code>foobar key_down</code> 同上</li>
+</ul>
+
+
+<p><strong>注意</strong> 截至本文发布时，zsh 要使用 key_up key_down 功能必须在 <code>.zshenv</code>
+中加入：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">DEBIAN_PREVENT_KEYBOARD_CHANGES</span><span class="o">=</span>yes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>实用例子</strong></p>
+
+<p><code>sudo !!</code> 使用时遇到无权限时可快速使用 sudo</p>
+
+<h3>表达式</h3>
+
+<ul>
+<li>花括号表达式</li>
+<li>算数表达式</li>
+<li>命令表达式</li>
+<li>双引号和单引号</li>
+</ul>
+
+
+<p><strong>实用例子</strong></p>
+
+<ul>
+<li>重命名，超好用有没有</li>
+</ul>
+
+
+<p><code>mv afuckinglongpath.{css,scss}</code></p>
+
+<ul>
+<li>跳转命令所在目录</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd</span> <span class="sb">`</span>whick rake<span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>双引号转义，单引号不转义</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;$PATH&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;$PATH&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>导航</h2>
+
+<p><code>cd -</code> 跳转上一个目录</p>
+
+<p><code>d</code> 最近的目录</p>
+
+<p><code>cd +n</code> 跳转上面列出的目录，直接输入 <code>n</code> 也可以</p>
+
+<h2>其他</h2>
+
+<p>多用 alias，你会发现 oh-my-zsh 里面很多插件其实就是 alias。</p>
+
+<p>当然，不要忘了我们的 <code>tab</code>。</p>
+
+<hr />
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://linuxcommand.org">the linux command</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1131,117 +1292,6 @@ fork 这个项目，然后加入vundle
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/07/ack_better_than_grep/">Ack, Better Than Grep</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-07T18:33:00+08:00" pubdate data-updated="true">Jul 7<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/07/ack_better_than_grep/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>首先吐槽下ack 的域名，直接是<a href="http://betterthangrep.com">http://betterthangrep.com</a> ，
-这让grep 情何以勘。。。</p>
-
-<h2>什么是ack</h2>
-
-<p>ack 是一个类似于grep 并为程序员专门优化过的字符串搜索工具。</p>
-
-<h2>安装ack</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># for ubuntu</span>
-</span><span class='line'>sudo apt-get install ack-grep
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>因为已经有一个软件叫ack 了，所以可以：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">ack</span><span class="o">=</span><span class="s2">&quot;ack-grep&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Why ack?</h2>
-
-<ul>
-<li><p>快速</p>
-
-<p>ack 只搜索必需的文件。</p></li>
-<li><p>更好的搜索</p>
-
-<p>ack 默认忽略了SVN Git 以及其他版本控制系统的非源代码文件。</p></li>
-<li><p>为源代码搜索而设计</p>
-
-<p>不同于搜索文本的grep，ack 是专门搜索源代码的。</p></li>
-<li><p>高度的可移植性</p>
-
-<p>ack 是纯正的perl 脚本，可以在安装了perl 的windows 上运行。</p></li>
-<li><p>免费开源</p></li>
-</ul>
-
-
-<h2>小技巧</h2>
-
-<ul>
-<li><p><code>--smart-case</code>，与vim的<code>smartcase</code> 类似，查找字符串全部小写着忽略大小写。</p></li>
-<li><p><code>-a</code> 查找全部文件，因ack 为
-为提高速度而忽略掉一些文件，所以有时有必要加上这个选项，
-最常见的就是查找ruby 的某些文件，因为很多不能被识别为源代码文件。</p></li>
-<li><p><code>-Q</code> 省去表达式中转义的麻烦。</p></li>
-<li><p><code>--ruby</code> 只查找ruby 文件，类似的有<code>--perl</code>。</p></li>
-<li><p><code>show-types</code> 显示文件类型。</p></li>
-</ul>
-
-
-<p>更多的可以<code>--help</code> 查看。</p>
-
-<h2>ack.vim</h2>
-
-<p>vim 插件，可以于github <a href="https://github.com/mileszs/ack.vim.git">下载</a>。</p>
-
-<p>.vimrc 中加入</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> g:ackprg<span class="p">=</span><span class="s2">&quot;ack-grep -H --nocolor --nogroup --column&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我喜欢加入<code>--smart-case</code>。</p>
-
-<p>之后在vim 中可以用Ack 等几个命令查找，结果会显示在quickfix list 中，
-非常方便。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1255,12 +1305,16 @@ fork 这个项目，然后加入vundle
     <iframe width="100%" height="90" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=90&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1699057621&verifier=0d5c1e74&colors=d6f3f7,f2f2f2,666666,0082cb,ecfbfd&dpc=1"></iframe>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (2)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (3)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (7)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (2)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (4)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (7)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
 </section>
 <script type="text/javascript" src="http://www.douban.com/service/badge/2076835/?show=collection&amp;n=6&amp;columns=3&amp;hidelogo=yes&amp;cat=book" ></script>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/24/linux-keyboard-tricks/">linux keyboard tricks</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/12/17/bdd/">BDD</a>
@@ -1276,10 +1330,6 @@ fork 这个项目，然后加入vundle
     
       <li class="post">
         <a href="/blog/2012/09/05/a-gem-a-day-pry/">一日一Gem - Pry</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/14/cycling-in-qinghai-lake-day-four/">环骑青海湖 - Day 4</a>
       </li>
     
   </ul>
