@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gem | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/gem/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2012-12-24T19:51:52+08:00</updated>
+  <updated>2013-02-26T00:43:14+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -12,6 +12,283 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Capistrano]]></title>
+    <link href="http://thisiskun.github.com/blog/2013/02/25/capistrano/"/>
+    <updated>2013-02-25T23:23:00+08:00</updated>
+    <id>http://thisiskun.github.com/blog/2013/02/25/capistrano</id>
+    <content type="html"><![CDATA[<p>最近研究 Capistrano 来着，在此记录心得体会。</p>
+
+<h3>什么是 Capistrano</h3>
+
+<p>Capistrano 是一个可在多台服务器上并行命令的工具，主要用于部署 Web 应用。</p>
+
+<h3>为什么要用 Capistrano</h3>
+
+<p>Capistrano 分化并自动化部署过程，让部署变得更简单，由于使用 Ruby，
+所以 DevOps 实践起来也更容易。</p>
+
+<h3>Capistrano 的具体使用</h3>
+
+<h4>基本概念</h4>
+
+<ul>
+<li><p>SSH</p>
+
+<p>Capistrano 通过 SSH 协议在服务器上执行命令，通过 ssh-keygen 和 ssh-copy-id
+可以更方便的使用 SSH。</p></li>
+<li><p>SCM</p>
+
+<p>SCM，跟据实际情况可以是 git，svn 等，指定代码仓库，Capistrano
+部署内容将在此获取。</p></li>
+<li><p>Roles</p>
+
+<p>一般的有 web，app，db，可以指定不同服务器，所以可以让指定的 task
+在特定服务器上执行。</p></li>
+<li><p>Tasks</p>
+
+<p>要执行的任务，用法跟 Rake 相近。</p></li>
+<li><p>Callbacks</p>
+
+<p>有 <code>after</code> <code>before</code>，可让 task 于其他 task 执行前后执行。</p></li>
+</ul>
+
+
+<h3>实施步骤</h3>
+
+<ul>
+<li><p>安装 capistrano gem</p></li>
+<li><p>capify .</p>
+
+<p>生成 Capfile config/deploy.rb 两个文件</p></li>
+<li><p>cap deploy:migrations</p>
+
+<p>部署并启动服务</p></li>
+<li><p>cap deploy</p>
+
+<p>更新代码后再次部署</p></li>
+<li><p>更多 <code>cap -T</code></p></li>
+</ul>
+
+
+<p>config/deploy.rb 实例</p>
+
+<p>``` ruby config/deploy.rb
+set :user, "deployer"
+set :domain, "foobar.com"
+set :application, "foobar"</p>
+
+<p>require 'bundler/capistrano'</p>
+
+<h1>RVM</h1>
+
+<p>require 'rvm/capistrano'
+set :rvm_ruby_string, "1.9.3-p385"
+set :rvm_type, :user</p>
+
+<h1>filepath</h1>
+
+<p>set :repository,  "git@github.com:thisiskun/foobar.git"
+set :deploy_to, "/home/#{user}/#{domain}"</p>
+
+<p>role :web, domain
+role :app, domain
+role :db, domain, :primary => true</p>
+
+<p>set :deploy_via, :remote_cache
+set :scm, 'git'
+set :branch, 'master'
+set :scm_verbose, true
+set :use_sudo, false
+set :rails_env, :production</p>
+
+<p>set :scm, :git</p>
+
+<h1>add uploads dir</h1>
+
+<p>set :uploads_dirs, %w(public/uploads)
+set :shared_children, fetch(:shared_children) + fetch(:uploads_dirs)</p>
+
+<h1>if you want to clean up old releases on each deploy uncomment this:</h1>
+
+<p>after "deploy:restart", "deploy:cleanup"</p>
+
+<p>namespace :deploy do</p>
+
+<p>  task :start do ; end
+  task :stop do ; end
+  task :restart, :roles => :app, :except => { :no_release => true } do</p>
+
+<pre><code>run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+</code></pre>
+
+<p>  end</p>
+
+<p>  namespace :deploy do</p>
+
+<pre><code>namespace :assets do
+  desc "Precompile assets on local machine and upload them to the server."
+  task :precompile, :roles =&gt; web, :except =&gt; {:no_release =&gt; true} do
+    run_locally "bundle exec rake assets:precompile"
+    find_servers_for_task(current_task).each do |server|
+      run_locally "rsync -vr --exclude='.DS_Store' public/assets #{user}@#{server.host}:#{shared_path}/"
+    end
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  desc "Update remote database and settings file with local copy"
+  task :sync_yaml do</p>
+
+<pre><code>run "mkdir -p #{shared_path}/config"
+run_locally("rsync config/database.yml #{user}@#{domain}:#{latest_release}/config/database.yml")
+run_locally("rsync config/settings.yml #{user}@#{domain}:#{latest_release}/config/settings.yml")
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>before "bundle:install", "deploy:sync_yaml"
+```</p>
+
+<h3>实际部署中遇到的问题</h3>
+
+<h4>RVM</h4>
+
+<p>如果服务器上用 RVM 安装的 ruby，需要做如下配置</p>
+
+<p><code>ruby Gemfile
+gem 'rvm-capistrano'
+</code></p>
+
+<p>``` ruby config/deploy.rb
+require 'rvm/capistrano'</p>
+
+<h1>RVM</h1>
+
+<p>require 'rvm/capistrano'
+set :rvm_ruby_string, "1.9.3-p385"
+set :rvm_type, :user
+```</p>
+
+<h4>deploy 完代码后执行 <code>bundle install</code></h4>
+
+<p><code>ruby config/deploy.rb
+require 'bundler/capistrano'
+</code></p>
+
+<p>看代码，可知是在 <code>deploy:update_code</code> 后执行的。</p>
+
+<h4>assets precompile</h4>
+
+<p>在整个部署过程中，最耗时间的应该就是 assets precompile 这一步了，
+而且性能消耗比较高，你可能不会想在服务器上做，所以比较好的解决方案就是，</p>
+
+<ul>
+<li>本地 assets precompile 后上传服务器</li>
+</ul>
+
+
+<p><code>bash .gitignore
+public/assets
+</code></p>
+
+<p><code>ruby Capfile
+load 'deploy/assets'
+</code></p>
+
+<p>覆写 assets:precompile task</p>
+
+<p>``` ruby config/deploy.rb
+namespace :deploy do
+  namespace :assets do</p>
+
+<pre><code>desc "Precompile assets on local machine and upload them to the server."
+task :precompile, :roles =&gt; web, :except =&gt; {:no_release =&gt; true} do
+  run_locally "bundle exec rake assets:precompile"
+  find_servers_for_task(current_task).each do |server|
+    run_locally "rsync -vr --exclude='.DS_Store' public/assets #{user}@#{server.host}:#{shared_path}/"
+  end
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<ul>
+<li>提高 assets:precompile 的速度</li>
+</ul>
+
+
+<p><code>ruby Gemfile
+group :assets do
+  gem 'turbo-sprockets-rails3'
+end
+</code></p>
+
+<h4>config/database.yml 敏感数据问题</h4>
+
+<p>切忌把这些包含敏感数据的配置文件加入到版本控制工具中去</p>
+
+<p><code>bash .gitignore
+config/database.yml
+</code></p>
+
+<p>定义上传的 task</p>
+
+<p>``` ruby config/deploy.rb
+  desc "Update remote database and settings file with local copy"
+  task :sync_yaml do</p>
+
+<pre><code>run_locally("rsync config/database.yml #{user}@#{domain}:#{latest_release}/config/database.yml")
+run_locally("rsync config/settings.yml #{user}@#{domain}:#{latest_release}/config/settings.yml")
+</code></pre>
+
+<p>  end</p>
+
+<p>  before "bundle:install", "deploy:sync_yaml"
+```</p>
+
+<h4>上传文件问题</h4>
+
+<p>``` bash .gitignore</p>
+
+<h1>where your uploaded files localed</h1>
+
+<p>public/uploads
+```</p>
+
+<p>``` ruby config/deploy.rb</p>
+
+<h1>add uploads dir</h1>
+
+<p>set :uploads_dirs, %w(public/uploads)
+set :shared_children, fetch(:shared_children) + fetch(:uploads_dirs)
+```</p>
+
+<p>因为修改了 <code>shared_dirs</code>，所以要先执行 deploy:setup。</p>
+
+<p>关于 <code>shared_dirs</code>，这里实际上放置了一些各个 releases 之间共享的文件，
+像是系统生成的 log，pid 等，Capistrano 会在更新代码后生成 soft link，
+生成的 assets 文件也是放在这里的，避免之前的版本不能访问的问题。
+所以上传文件目录放在共享下也是比较合理的。</p>
+
+<hr />
+
+<p>参考：</p>
+
+<ul>
+<li><a href="http://pragprog.com/book/rails4/agile-web-development-with-rails">Agile Web Development with Rails</a></li>
+<li><a href="http://pragprog.com/book/rails4/agile-web-development-with-rails">一次搞懂 Assets Pipeline</a></li>
+<li><a href="http://stackoverflow.com/a/9710542/1115359">stackoverflow Carrierwave files with Capistrano</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[一日一Gem - bundler]]></title>

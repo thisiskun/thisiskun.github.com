@@ -9,11 +9,9 @@
   <meta name="author" content="Arthur Chen">
 
   
-  <meta name="description" content="首先吐槽下ack 的域名，直接是http://betterthangrep.com ，
-这让grep 情何以勘。。。 什么是ack ack 是一个类似于grep 并为程序员专门优化过的字符串搜索工具。 安装ack 1
-2
-# for ubuntu
-sudo apt-get install ack- &hellip;">
+  <meta name="description" content="使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。 下面是我的vim 的一些配置，你可以在github 上找到
+它。 同步备份vim配置 vim 的配置文件默认是～/.vim/ 以及~/.vimrc 和~/.gvimrc，github 在
+建立一个repo， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +88,132 @@ sudo apt-get install ack- &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/07/09/my-vim/">我的vim</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-09T16:50:00+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/07/09/my-vim/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>使用vim 也有一阵子了，感觉手感已经烧录进我的手指了，一旦拥有，很难回头去用其他的了。</p>
+
+<p>下面是我的vim 的一些配置，你可以在github 上找到
+<a href="https://github.com/thisiskun/dotvim">它</a>。</p>
+
+<h2>同步备份vim配置</h2>
+
+<p>vim 的配置文件默认是<code>～/.vim/</code> 以及<code>~/.vimrc</code> 和<code>~/.gvimrc</code>，github 在
+建立一个repo， 不仅可以方便的同步备份，还可以跟别人分享你的配置。</p>
+
+<h2>插件管理vundle</h2>
+
+<p>感谢pathogen 和vundle 这样的插件，让vim 插件管理起来是如此的轻松。
+经过对比，最后还是选用vundle，pathogen 采用的是git
+submodule，总是没那么好用。
+vundle 使用起来跟bundle
+十分的相似，一个配置文件（vimrc），几个命令（<code>BundleInstall(!)</code>，<code>BundleClean(1)</code>）
+就搞定。
+vundle 可以从github，vim.org或者指定git repo上同步插件。
+如果你使用github 管理<code>.vim</code> 目录，那记得在<code>.gitignore</code> 中加入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle<span class="se">\</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>更好的snipmate</h2>
+
+<p>snipmate 提供了很好的代码补全功能，scrooloose 提供了更好的
+<a href="https://github.com/thisiskun/snipmate-snippets.git">snippets</a>。
+fork 这个项目，然后加入vundle
+的插件列表中，这样就可以方便的管理扩展这些snippets 了。
+最后在vimrc 中设置snippets 的目录。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> g:snippets_dir<span class="p">=</span><span class="s2">&quot;~/.vim/bundle/snipmate-snippets/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>快速安装脚本</h2>
+
+<p>虽然按照前面的设定，要在一台新机器上同步vim 配置很方便，
+但是写一个脚本还是比Ctrl-c Ctrl-v 来的方便。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git@github.com:thisiskun/dotvim.git ~/.vim
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行<code>setup.sh</code> 脚本：</p>
+
+<figure class='code'><figcaption><span>setup.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="c"># setup rc files</span>
+</span><span class='line'>ln -s ~/.vim/vimrc ~/.vimrc
+</span><span class='line'>ln -s ~/.vim/gvimrc ~/.gvimrc
+</span><span class='line'>
+</span><span class='line'><span class="c"># back and undo directory</span>
+</span><span class='line'>mkdir ~/.vimbackup
+</span><span class='line'>mkdir ~/.vimundodir
+</span><span class='line'>
+</span><span class='line'><span class="c"># setup vundle</span>
+</span><span class='line'>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</span><span class='line'>vim +BundleInstall +qa
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>参考：</p>
+
+<ul>
+<li><p><a href="http://stevelosh.com/blog/2010/09/coming-home-to-vim/">coming home to vim</a></p></li>
+<li><p><a href="http://vimcasts.org/">vimcasts.org</a></p></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1141,12 +1265,16 @@ name填<code>foobar.github.com</code>。</p>
     <iframe width="100%" height="90" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=90&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1699057621&verifier=0d5c1e74&colors=d6f3f7,f2f2f2,666666,0082cb,ecfbfd&dpc=1"></iframe>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (2)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (4)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (7)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/gem'>gem (3)</a></li><li><a href='/blog/categories/gems'>gems (1)</a></li><li><a href='/blog/categories/how-to'>how-to (1)</a></li><li><a href='/blog/categories/linux'>linux (4)</a></li><li><a href='/blog/categories/octopress'>octopress (2)</a></li><li><a href='/blog/categories/ruby'>ruby (8)</a></li><li><a href='/blog/categories/travel'>travel (4)</a></li><li><a href='/blog/categories/vim'>vim (2)</a></li><li><a href='/blog/categories/测试'>测试 (1)</a></li></ul>
 </section>
 <script type="text/javascript" src="http://www.douban.com/service/badge/2076835/?show=collection&amp;n=6&amp;columns=3&amp;hidelogo=yes&amp;cat=book" ></script>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/25/capistrano/">Capistrano</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/12/24/linux-keyboard-tricks/">linux keyboard tricks</a>
@@ -1164,10 +1292,6 @@ name填<code>foobar.github.com</code>。</p>
         <a href="/blog/2012/11/16/bundler/">一日一Gem - bundler</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/09/05/a-gem-a-day-pry/">一日一Gem - Pry</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1177,7 +1301,7 @@ name填<code>foobar.github.com</code>。</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - Arthur Chen -
+  Copyright &copy; 2013 - Arthur Chen -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
