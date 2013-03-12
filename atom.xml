@@ -4,7 +4,7 @@
   <title><![CDATA[This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2013-02-26T00:43:14+08:00</updated>
+  <updated>2013-03-12T13:47:09+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -138,6 +138,11 @@
 <span class='line-number'>62</span>
 <span class='line-number'>63</span>
 <span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">set</span> <span class="ss">:user</span><span class="p">,</span> <span class="s2">&quot;deployer&quot;</span>
 </span><span class='line'><span class="n">set</span> <span class="ss">:domain</span><span class="p">,</span> <span class="s2">&quot;foobar.com&quot;</span>
 </span><span class='line'><span class="n">set</span> <span class="ss">:application</span><span class="p">,</span> <span class="s2">&quot;foobar&quot;</span>
@@ -170,6 +175,9 @@
 </span><span class='line'><span class="n">set</span> <span class="ss">:uploads_dirs</span><span class="p">,</span> <span class="sx">%w(public/uploads)</span>
 </span><span class='line'><span class="n">set</span> <span class="ss">:shared_children</span><span class="p">,</span> <span class="n">fetch</span><span class="p">(</span><span class="ss">:shared_children</span><span class="p">)</span> <span class="o">+</span> <span class="n">fetch</span><span class="p">(</span><span class="ss">:uploads_dirs</span><span class="p">)</span>
 </span><span class='line'>
+</span><span class='line'><span class="c1"># add config to shared_dirs</span>
+</span><span class='line'><span class="n">set</span> <span class="ss">:shared_children</span><span class="p">,</span> <span class="n">fetch</span><span class="p">(</span><span class="ss">:shared_children</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;config&quot;</span>
+</span><span class='line'>
 </span><span class='line'><span class="c1"># if you want to clean up old releases on each deploy uncomment this:</span>
 </span><span class='line'><span class="n">after</span> <span class="s2">&quot;deploy:restart&quot;</span><span class="p">,</span> <span class="s2">&quot;deploy:cleanup&quot;</span>
 </span><span class='line'>
@@ -184,7 +192,7 @@
 </span><span class='line'>  <span class="n">namespace</span> <span class="ss">:deploy</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">namespace</span> <span class="ss">:assets</span> <span class="k">do</span>
 </span><span class='line'>      <span class="n">desc</span> <span class="s2">&quot;Precompile assets on local machine and upload them to the server.&quot;</span>
-</span><span class='line'>      <span class="n">task</span> <span class="ss">:precompile</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="n">web</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">}</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">task</span> <span class="ss">:precompile</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:web</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">}</span> <span class="k">do</span>
 </span><span class='line'>        <span class="n">run_locally</span> <span class="s2">&quot;bundle exec rake assets:precompile&quot;</span>
 </span><span class='line'>        <span class="n">find_servers_for_task</span><span class="p">(</span><span class="n">current_task</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">server</span><span class="o">|</span>
 </span><span class='line'>          <span class="n">run_locally</span> <span class="s2">&quot;rsync -vr --exclude=&#39;.DS_Store&#39; public/assets </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">server</span><span class="o">.</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">shared_path</span><span class="si">}</span><span class="s2">/&quot;</span>
@@ -195,9 +203,11 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="n">desc</span> <span class="s2">&quot;Update remote database and settings file with local copy&quot;</span>
 </span><span class='line'>  <span class="n">task</span> <span class="ss">:sync_yaml</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">run</span> <span class="s2">&quot;mkdir -p </span><span class="si">#{</span><span class="n">shared_path</span><span class="si">}</span><span class="s2">/config&quot;</span>
-</span><span class='line'>    <span class="n">run_locally</span><span class="p">(</span><span class="s2">&quot;rsync config/database.yml </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">domain</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2">/config/database.yml&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">run_locally</span><span class="p">(</span><span class="s2">&quot;rsync config/settings.yml </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">domain</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2">/config/settings.yml&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="sx">%[database.yml settings.yml]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">run_locally</span><span class="p">(</span><span class="s2">&quot;rsync config/</span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">@</span><span class="si">#{</span><span class="n">domain</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">shared_path</span><span class="si">}</span><span class="s2">/config/</span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">run</span> <span class="s2">&quot;ln -nfs </span><span class="si">#{</span><span class="n">shared_path</span><span class="si">}</span><span class="s2">/config/</span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2"></span>
+</span><span class='line'><span class="s2">      </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/config/</span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | This is Kun's Blog.]]></title>
   <link href="http://thisiskun.github.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://thisiskun.github.com/"/>
-  <updated>2013-02-26T00:43:14+08:00</updated>
+  <updated>2013-03-12T13:47:09+08:00</updated>
   <id>http://thisiskun.github.com/</id>
   <author>
     <name><![CDATA[Arthur Chen]]></name>
@@ -110,6 +110,10 @@ set :rails_env, :production</p>
 <p>set :uploads_dirs, %w(public/uploads)
 set :shared_children, fetch(:shared_children) + fetch(:uploads_dirs)</p>
 
+<h1>add config to shared_dirs</h1>
+
+<p>set :shared_children, fetch(:shared_children) + "config"</p>
+
 <h1>if you want to clean up old releases on each deploy uncomment this:</h1>
 
 <p>after "deploy:restart", "deploy:cleanup"</p>
@@ -129,7 +133,7 @@ set :shared_children, fetch(:shared_children) + fetch(:uploads_dirs)</p>
 
 <pre><code>namespace :assets do
   desc "Precompile assets on local machine and upload them to the server."
-  task :precompile, :roles =&gt; web, :except =&gt; {:no_release =&gt; true} do
+  task :precompile, :roles =&gt; :web, :except =&gt; {:no_release =&gt; true} do
     run_locally "bundle exec rake assets:precompile"
     find_servers_for_task(current_task).each do |server|
       run_locally "rsync -vr --exclude='.DS_Store' public/assets #{user}@#{server.host}:#{shared_path}/"
@@ -143,9 +147,11 @@ end
 <p>  desc "Update remote database and settings file with local copy"
   task :sync_yaml do</p>
 
-<pre><code>run "mkdir -p #{shared_path}/config"
-run_locally("rsync config/database.yml #{user}@#{domain}:#{latest_release}/config/database.yml")
-run_locally("rsync config/settings.yml #{user}@#{domain}:#{latest_release}/config/settings.yml")
+<pre><code>%[database.yml settings.yml].each do |file|
+  run_locally("rsync config/#{file} #{user}@#{domain}:#{shared_path}/config/#{file}")
+  run "ln -nfs #{shared_path}/config/#{file}
+  #{release_path}/config/#{file}"
+end
 </code></pre>
 
 <p>  end
