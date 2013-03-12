@@ -97,6 +97,9 @@ set :scm, :git
 set :uploads_dirs, %w(public/uploads)
 set :shared_children, fetch(:shared_children) + fetch(:uploads_dirs)
 
+# add config to shared_dirs
+set :shared_children, fetch(:shared_children) + "config"
+
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
 
@@ -111,7 +114,7 @@ namespace :deploy do
   namespace :deploy do
     namespace :assets do
       desc "Precompile assets on local machine and upload them to the server."
-      task :precompile, :roles => web, :except => {:no_release => true} do
+      task :precompile, :roles => :web, :except => {:no_release => true} do
         run_locally "bundle exec rake assets:precompile"
         find_servers_for_task(current_task).each do |server|
           run_locally "rsync -vr --exclude='.DS_Store' public/assets #{user}@#{server.host}:#{shared_path}/"
@@ -122,9 +125,11 @@ namespace :deploy do
 
   desc "Update remote database and settings file with local copy"
   task :sync_yaml do
-    run "mkdir -p #{shared_path}/config"
-    run_locally("rsync config/database.yml #{user}@#{domain}:#{latest_release}/config/database.yml")
-    run_locally("rsync config/settings.yml #{user}@#{domain}:#{latest_release}/config/settings.yml")
+    %[database.yml settings.yml].each do |file|
+      run_locally("rsync config/#{file} #{user}@#{domain}:#{shared_path}/config/#{file}")
+      run "ln -nfs #{shared_path}/config/#{file}
+      #{release_path}/config/#{file}"
+    end
   end
 end
 
