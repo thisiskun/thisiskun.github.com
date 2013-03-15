@@ -241,7 +241,7 @@ set :shared_children, fetch(:shared_children) + fetch(:uploads_dirs)
 关于 `shared_dirs`，这里实际上放置了一些各个 releases 之间共享的文件，
 像是系统生成的 log，pid 等，Capistrano 会在更新代码后生成 soft link，
 生成的 assets 文件也是放在这里的，避免之前的版本不能访问的问题。
-所以上传文件目录放在共享下也是比较合理的。
+所以上传文件目录放在共享下也是比较合理的。 
 
 ---------------------------------------
 
